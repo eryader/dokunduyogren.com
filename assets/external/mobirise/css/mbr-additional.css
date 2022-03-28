@@ -1739,3 +1739,15 @@ a {
 .cid-ss6xaOnqmj .media-container-row .row-copirayt p {
   width: 100%;
 }
+
+p > a {
+  color: #fee005;
+  background-color: #1d2c35;
+  padding: 3px;
+}
+
+p > a:hover {
+  color: #1d2c35;
+  background-color: #fee005;
+  padding: 3px;
+}
