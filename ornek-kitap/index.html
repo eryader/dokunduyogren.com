@@ -362,7 +362,7 @@
           <img class="img-responsive img-fluid" src="page01/page-full.png" class="img-fluid" alt="book content">
         </div>
         <div class="modal-footer">
-          <a type="button" href="#" class="btn btn-primary">Yazdır</a>
+          <a type="button" href="#" target="_blank" class="btn btn-primary">Yazdır</a>
           <button type="button" class="btn btn-secondary close" data-dismiss="modal">Kapat</button>
         </div>
       </div>
@@ -388,6 +388,7 @@
       var pageFolder = $(this).data('page-folder')
       $('.modal-title').text(pageFolder)
       $('.modal-body img').attr('src', pageFolder + '/page-full.png')
+      $('.modal-footer a').attr('href', pageFolder + '/page-full.png')
 
       $('#imagePopupModal').modal('show');
     });
