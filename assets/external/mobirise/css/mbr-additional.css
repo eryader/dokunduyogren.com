@@ -1525,6 +1525,7 @@ a {
 .cid-ss6x7eF0jq .card-wrap {
   background: #d8eee1;
   border-radius: 4px;
+  height: 800px;
 }
 @media (max-width: 991px) {
   .cid-ss6x7eF0jq .card-wrap {
@@ -1550,6 +1551,7 @@ a {
   flex-wrap: wrap;
   justify-content: center;
   margin-bottom: 1.5rem;
+  
 }
 .cid-ss6x7eF0jq .social-row .socicon {
   font-size: 20px !important;
