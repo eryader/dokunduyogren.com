@@ -815,4 +815,7 @@ ul,ol,pre,blockquote{
     right:-2px;
     height:5px
 }
- 
+
+.team1 .col-sm-6 .card-wrap {
+    height: 100%;
+}

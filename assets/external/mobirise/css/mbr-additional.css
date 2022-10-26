@@ -1173,6 +1173,7 @@ a {
   padding-top: 10rem;
   padding-bottom: 10rem;
   background-image: url("../../../external/images/background20.jpeg");
+  background-position: bottom;
 }
 @media (min-width: 992px) {
   .cid-ss6x0h64SY .column {
