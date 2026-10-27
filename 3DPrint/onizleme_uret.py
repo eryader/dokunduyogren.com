@@ -23,6 +23,8 @@ STLS = [
     ('geometri-seti/stl/gonye_30_60.stl', None),
     ('geometri-seti/stl/iletki_180.stl', None),
     ('ruler-01/tactile_ruler_beefier.stl', FLAT_ON_X),
+    ('kesir-seti/stl/tabak.stl', None),
+    ('kesir-seti/stl/kesir_1_4.stl', None),
 ]
 RES = (1200, 800)
 TILT = 28.0

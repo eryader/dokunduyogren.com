@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Dokun Duy Öğren - 3D Baskı Araçları</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Görme engelli öğrenciler için 3D yazıcıyla basılabilen dokunsal cetvel, gönye ve iletki modelleri.">
+  <meta name="description" content="Görme engelli ve az gören öğrenciler için 3D yazıcıyla basılabilen dokunsal cetvel, gönye, iletki ve kesir seti modelleri.">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 
@@ -13,8 +13,8 @@
   <section class="py-5 text-center container">
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
-        <h1 class="fw-light">3D Baskı Dokunsal Ölçme Araçları</h1>
-        <p class="lead text-muted">Görme engelli öğrencilerin ölçüm yapıp çizim yapabilmesi için hazırladığımız cetvel, gönye ve iletki modelleri. STL dosyalarını indirip 3D yazıcıda ücretsiz olarak basabilirsiniz.</p>
+        <h1 class="fw-light">3D Baskı Dokunsal Ders Araçları</h1>
+        <p class="lead text-muted">Görme engelli ve az gören öğrencilerin ölçüm ve çizim yapabilmesi, kesirleri dokunarak öğrenebilmesi için hazırladığımız cetvel, gönye, iletki ve kesir seti modelleri. STL dosyalarını indirip 3D yazıcıda ücretsiz olarak basabilirsiniz.</p>
         <p>
           <a href="https://dokunduyogren.com" class="btn btn-warning my-2">Dokun Duy Öğren</a>
           <a href="https://eryader.org" class="btn btn-primary my-2" target="_blank">ERYADER</a>
@@ -122,10 +122,71 @@
     </div>
   </div>
 
+  <div class="container mt-5">
+    <h2 class="h4">Kesir Seti</h2>
+    <p>1/1'den 1/12'ye kadar dokunsal kesir daireleri ve parçaların oturduğu tabak. Her parçada Braille kesir ve az gören öğrenciler için büyük punto "1/N" yazısı vardır.</p>
+    <ul>
+      <li><strong>Merkez pimi:</strong> parçaların uçları tabağın ortasındaki pime oturur, kenar parçayı dışarıdan tutar. Öğrenci parçayı dokunarak yerine koyabilir.</li>
+      <li><strong>Başlangıç noktası:</strong> tabağın kenarında saat 12 yönündeki büyük nokta. Kesirler buradan saat yönünde dizilerek karşılaştırılır (örneğin 1/2 ile 2/4).</li>
+      <li><strong>Parmak oyukları:</strong> saat 3 ve 9 yönünde, parçayı tabaktan kaldırmak için.</li>
+      <li><strong>Braille:</strong> merkezden dışa doğru okunur. Pay normal rakamla, payda alt rakamla yazılmıştır.</li>
+    </ul>
+  </div>
+
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      <div class="col">
+        <div class="card shadow-sm h-100">
+          <img class="img-fluid" src="onizleme/tabak.jpg" alt="Kesir dairelerinin oturduğu dokunsal tabağın 3D modeli">
+          <div class="card-body d-flex flex-column">
+            <h3 class="h5 card-title">Kesir Tabağı</h3>
+            <p class="card-text">Kesir dairelerinin oturduğu tabak. Ortada merkez pimi, saat 12 yönünde başlangıç noktası, iki yanda parmak oyuğu, tutma dilinde Braille ve büyük punto "KESİR" yazısı.</p>
+            <div class="mt-auto d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <a class="btn btn-sm btn-outline-secondary" href="kesir-seti/stl/tabak.stl" download>STL İndir</a>
+                <a class="btn btn-sm btn-outline-secondary" href="kesir-seti/onizleme_tabak.png" target="_blank">Yakından</a>
+              </div>
+              <small class="text-muted">111 × 137 × 6,4 mm</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card shadow-sm h-100">
+          <img class="img-fluid" src="onizleme/kesir_1_4.jpg" alt="Dört çeyrekten oluşan dokunsal kesir dairesinin 3D modeli">
+          <div class="card-body d-flex flex-column">
+            <h3 class="h5 card-title">Kesir Daireleri</h3>
+            <p class="card-text">100 mm çaplı daireler: 1/1, 1/2, 1/3, 1/4, 1/5, 1/6, 1/8, 1/10 ve 1/12. Her STL dosyası bir kesrin bütün parçalarını içerir.</p>
+            <div class="d-flex flex-wrap gap-1 mb-3">
+              <a class="btn btn-sm btn-outline-secondary" href="kesir-seti/stl/kesir_1_1.stl" download aria-label="1/1 bütün parçasının STL dosyasını indir">1/1</a>
+              <a class="btn btn-sm btn-outline-secondary" href="kesir-seti/stl/kesir_1_2.stl" download aria-label="1/2 parçalarının STL dosyasını indir">1/2</a>
+              <a class="btn btn-sm btn-outline-secondary" href="kesir-seti/stl/kesir_1_3.stl" download aria-label="1/3 parçalarının STL dosyasını indir">1/3</a>
+              <a class="btn btn-sm btn-outline-secondary" href="kesir-seti/stl/kesir_1_4.stl" download aria-label="1/4 parçalarının STL dosyasını indir">1/4</a>
+              <a class="btn btn-sm btn-outline-secondary" href="kesir-seti/stl/kesir_1_5.stl" download aria-label="1/5 parçalarının STL dosyasını indir">1/5</a>
+              <a class="btn btn-sm btn-outline-secondary" href="kesir-seti/stl/kesir_1_6.stl" download aria-label="1/6 parçalarının STL dosyasını indir">1/6</a>
+              <a class="btn btn-sm btn-outline-secondary" href="kesir-seti/stl/kesir_1_8.stl" download aria-label="1/8 parçalarının STL dosyasını indir">1/8</a>
+              <a class="btn btn-sm btn-outline-secondary" href="kesir-seti/stl/kesir_1_10.stl" download aria-label="1/10 parçalarının STL dosyasını indir">1/10</a>
+              <a class="btn btn-sm btn-outline-secondary" href="kesir-seti/stl/kesir_1_12.stl" download aria-label="1/12 parçalarının STL dosyasını indir">1/12</a>
+            </div>
+            <div class="mt-auto d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <a class="btn btn-sm btn-outline-secondary" href="kesir-seti/onizleme_1_12.png" target="_blank">Yakından</a>
+                <a class="btn btn-sm btn-outline-secondary" href="kesir-seti/onizleme.png" target="_blank">Bütün Set</a>
+              </div>
+              <small class="text-muted">Ø 100 × 4,8 mm</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="container my-5">
     <h2 class="h4">Baskı ve Kaynak Dosyalar</h2>
-    <p>Geometri setinin parçaları 220 × 220 mm tablaya (Creality Ender 3 S1) sığacak şekilde boyutlandırıldı. Hazır G-code dosyası Ender 3 S1 ve PLA için hazırlanmıştır; farklı bir yazıcıda STL dosyasını kendi dilimleyicinizde açın.</p>
-    <p>Geometri seti Blender ile parametrik olarak üretildi. Ölçüleri değiştirmek isterseniz <a href="geometri-seti/generate_set.py" download>generate_set.py</a> betiğini ve <a href="geometri-seti/geometri_seti.blend" download>Blender dosyasını</a> kullanabilirsiniz.</p>
+    <p>Geometri seti ve kesir seti parçaları 220 × 220 mm tablaya (Creality Ender 3 S1) sığacak şekilde boyutlandırıldı. Hazır G-code dosyası Ender 3 S1 ve PLA için hazırlanmıştır; farklı bir yazıcıda STL dosyasını kendi dilimleyicinizde açın.</p>
+    <p>Az gören öğrenciler için iki renkli basabilirsiniz: dilimleyicide geometri setinde 3,0 mm'de, kesir parçalarında 4,0 mm'de, tabakta 5,4 mm'de duraklatıp filament değiştirin. Böylece kabartmalar zemin renginden ayrılır.</p>
+    <p>Modeller Blender ile parametrik olarak üretildi. Ölçüleri değiştirmek isterseniz <a href="geometri-seti/generate_set.py" download>generate_set.py</a> ve <a href="kesir-seti/generate_kesir.py" download>generate_kesir.py</a> betiklerini, ortak <a href="ortak/dokunsal.py" download>dokunsal.py</a> kütüphanesiyle birlikte kullanabilirsiniz. Blender dosyaları: <a href="geometri-seti/geometri_seti.blend" download>geometri seti</a>, <a href="kesir-seti/kesir_seti.blend" download>kesir seti</a>.</p>
   </div>
 
   <footer class="text-muted py-5">
@@ -133,7 +194,6 @@
       <p class="float-end mb-1">
         <a href="#">Sayfanın Başına Dön</a>
       </p>
-      <p class="mb-1">Bu içerik Kapsayıcı ve Erişilebilir Yaşam Derneği tarafından oluşturulmuştur.</p>
     </div>
   </footer>
 
