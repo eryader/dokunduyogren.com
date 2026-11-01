@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Dokun Duy Öğren - 3D Baskı Araçları</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Görme engelli ve az gören öğrenciler için 3D yazıcıyla basılabilen dokunsal cetvel, gönye, iletki, daire çizim cetveli, kesir seti ve sayı doğrusu modelleri.">
+  <meta name="description" content="Görme engelli ve az gören öğrenciler için 3D yazıcıyla basılabilen dokunsal cetvel, gönye, iletki, daire çizim cetveli, kesir seti, sayı doğrusu ve koordinat tahtası modelleri.">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 
@@ -14,7 +14,7 @@
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">3D Baskı Dokunsal Ders Araçları</h1>
-        <p class="lead text-muted">Görme engelli ve az gören öğrencilerin ölçüm ve çizim yapabilmesi, kesirleri ve tam sayıları dokunarak öğrenebilmesi için hazırladığımız cetvel, gönye, iletki, daire çizim cetveli, kesir seti ve sayı doğrusu modelleri. STL dosyalarını indirip 3D yazıcıda ücretsiz olarak basabilirsiniz.</p>
+        <p class="lead text-muted">Görme engelli ve az gören öğrencilerin ölçüm ve çizim yapabilmesi, kesirleri, tam sayıları ve koordinat düzlemini dokunarak öğrenebilmesi için hazırladığımız cetvel, gönye, iletki, daire çizim cetveli, kesir seti, sayı doğrusu ve koordinat tahtası modelleri. STL dosyalarını indirip 3D yazıcıda ücretsiz olarak basabilirsiniz.</p>
         <p>
           <a href="https://dokunduyogren.com" class="btn btn-warning my-2">Dokun Duy Öğren</a>
           <a href="https://eryader.org" class="btn btn-primary my-2" target="_blank">ERYADER</a>
@@ -259,20 +259,83 @@
     </div>
   </div>
 
+  <div class="container mt-5">
+    <h2 class="h4">Koordinat ve Geometri Tahtası</h2>
+    <p>Delikli tahta ve deliklere takılan pimler. Koordinat düzlemi olarak noktaları pimle işaretlemek, geometri tahtası olarak pimlerin çevresine lastik geçirip şekil kurmak için kullanılır. İki eksen de −5'ten 5'e gider, bir birim 15 mm'dir.</p>
+    <ul>
+      <li><strong>Eksenler:</strong> delikler arasında kabartma çizgi. Orijin, dört yanından çizgi çıkan tek deliktir. Eksenlerin artı uçlarında ok ve büyük punto x, y vardır.</li>
+      <li><strong>Büyük punto ve Braille:</strong> x için altta, y için solda her tam sayıda büyük punto rakam; −5, 0 ve 5'te Braille. Etiketler ızgaranın dışındadır, pimler ve lastikler üstlerini kapatmaz. Aradaki sayılar en yakın etiketten ya da orijinden delik sayılarak bulunur.</li>
+      <li><strong>Pimler:</strong> deliğe dik oturur, eksen üzerindeki noktalara da takılabilir. Başın altındaki boyuna üç dört lastik üst üste geçer. Yuvarlak ve kare başlı iki tür pim vardır; farklı renkte basın.</li>
+      <li><strong>Dikkat:</strong> pimler küçük parçadır. Küçük çocuklarda yutma tehlikesine karşı gözetimle kullanın.</li>
+    </ul>
+    <p class="mb-1">Derste kullanım örnekleri:</p>
+    <ul>
+      <li><strong>Nokta işaretleme:</strong> (3, −2) için orijinden x ekseni boyunca sağa 3 delik sayın, oradan aşağı 2 delik inip pimi takın.</li>
+      <li><strong>Şekiller:</strong> köşelere pim takıp lastik geçirerek üçgen, kare ve dikdörtgen kurun. Kenarları delik sayarak ölçün, alanı içinde kalan birim kareleri sayarak bulun.</li>
+      <li><strong>Simetri:</strong> bir şeklin köşelerini yuvarlak pimlerle, y eksenine göre simetriğini kare pimlerle işaretleyin; iki türü dokunarak karşılaştırın.</li>
+      <li><strong>Doğru grafiği:</strong> y = x için (−3, −3)'ten (3, 3)'e noktaları pimle işaretleyin, iki uçtaki pime lastik geçirin.</li>
+    </ul>
+  </div>
+
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      <div class="col">
+        <div class="card shadow-sm h-100">
+          <img class="img-fluid" src="onizleme/koordinat_tahtasi.jpg" alt="Eksi 5'ten 5'e 11 sıra 11 sütun delikli, eksenleri kabartma çizgili dokunsal koordinat tahtasının 3D modeli">
+          <div class="card-body d-flex flex-column">
+            <h3 class="h5 card-title">Koordinat Tahtası</h3>
+            <p class="card-text">11 × 11 delik, delikler arası 15 mm. Eksenler delikler arasında kabartma çizgi, artı uçlarında ok. Altta x, solda y için büyük punto rakamlar; −5, 0 ve 5'te Braille.</p>
+            <div class="mt-auto d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <a class="btn btn-sm btn-outline-secondary" href="koordinat-tahtasi/stl/koordinat_tahtasi.stl" download>STL İndir</a>
+                <a class="btn btn-sm btn-outline-secondary" href="koordinat-tahtasi/onizleme.png" target="_blank">Pimlerle</a>
+                <a class="btn btn-sm btn-outline-secondary" href="koordinat-tahtasi/onizleme_detay.png" target="_blank">Yakından</a>
+              </div>
+              <small class="text-muted">207 × 188 × 6 mm</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card shadow-sm h-100">
+          <img class="img-fluid" src="onizleme/pimler.jpg" alt="Baskı yönünde kırmızı yuvarlak başlı ve mavi kare başlı pim, altında beş delikli pim deneme parçası">
+          <div class="card-body d-flex flex-column">
+            <h3 class="h5 card-title">Pimler</h3>
+            <p class="card-text">Tahtanın deliklerine geçen pimler; başın altındaki boyuna lastik takılır. Ters basılır, destek gerekmez. Tahtayı basmadan önce pim deneme parçasıyla deliğin sıkılığını seçin.</p>
+            <div class="d-flex flex-wrap gap-1 mb-3">
+              <a class="btn btn-sm btn-outline-secondary" href="koordinat-tahtasi/stl/pim_yuvarlak.stl" download aria-label="Yuvarlak başlı pimin STL dosyasını indir">Yuvarlak Başlı</a>
+              <a class="btn btn-sm btn-outline-secondary" href="koordinat-tahtasi/stl/pim_kare.stl" download aria-label="Kare başlı pimin STL dosyasını indir">Kare Başlı</a>
+              <a class="btn btn-sm btn-outline-secondary" href="koordinat-tahtasi/stl/pim_deneme.stl" download aria-label="Pim deneme parçasının STL dosyasını indir">Pim Deneme</a>
+            </div>
+            <div class="mt-auto d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <a class="btn btn-sm btn-outline-secondary" href="koordinat-tahtasi/onizleme_pim.png" target="_blank">Baskı Yönü</a>
+              </div>
+              <small class="text-muted">10 × 10 × 16 mm</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="container my-5">
     <h2 class="h4">Baskı ve Kaynak Dosyalar</h2>
     <p>Bütün parçalar 220 × 220 mm tablaya (Creality Ender 3 S1) sığacak şekilde boyutlandırıldı. Hazır G-code dosyası Ender 3 S1 ve PLA için hazırlanmıştır; farklı bir yazıcıda STL dosyasını kendi dilimleyicinizde açın.</p>
-    <p>Az gören öğrenciler için iki renkli basabilirsiniz: dilimleyicide geometri setinde, daire çizim cetvelinde ve sayı doğrusunda 3,0 mm'de, kesir parçalarında 4,0 mm'de, tabakta 5,4 mm'de duraklatıp filament değiştirin. Böylece kabartmalar zemin renginden ayrılır. En iyi sonuç açık renk zemin (beyaz ya da sarı) ve koyu kabartmayla (siyah) alınır.</p>
+    <p>Az gören öğrenciler için iki renkli basabilirsiniz: dilimleyicide geometri setinde, daire çizim cetvelinde ve sayı doğrusunda 3,0 mm'de, kesir parçalarında 4,0 mm'de, koordinat tahtasında ve pim deneme parçasında 5,0 mm'de, tabakta 5,4 mm'de duraklatıp filament değiştirin. Böylece kabartmalar zemin renginden ayrılır. En iyi sonuç açık renk zemin (beyaz ya da sarı) ve koyu kabartmayla (siyah) alınır.</p>
     <p>Daire çizim cetvelinin delikleri 2,0 mm'dir; tükenmez kalemin ve açılmış kurşun kalemin ucu delikten kâğıda değer. Raptiye yoksa merkez deliğine dik tuttuğunuz bir kalemle merkezi bastırabilirsiniz. Öğrencinin kalemi rahat girmiyorsa önce delik deneme parçasını basın: 1,8, 2,0, 2,2 ve 2,4 mm'lik dört deliğin üstünde 1'den 4'e kadar nokta vardır. Uygun olan ölçüyü betikteki <code>HOLE_D</code> değerine yazıp cetveli yeniden üretin.</p>
+    <p>Koordinat tahtasının delikleri 5,0 mm, pimin deliğe giren gövdesi 4,8 mm'dir. Pimin delikte ne kadar sıkı duracağı yazıcıya göre değişir; tahtayı basmadan önce pim deneme parçasını ve birkaç pimi basın. 4,8, 4,9, 5,0, 5,1 ve 5,2 mm'lik beş deliğin üstünde 1'den 5'e kadar nokta vardır. Pimin dik ve sıkı durup elle rahat çıktığı ölçüyü betikteki <code>HOLE_D</code> değerine yazıp tahtayı yeniden üretin.</p>
     <p>Kaydırıcıların rayda ne kadar sıkı oturacağı yazıcıya göre değişir. Önce deneme rayını ve kaydırıcıları basın. Kaydırıcı sıkıysa betikteki <code>CLEAR</code> değerini büyütün (0,35–0,4); tık zayıfsa <code>DETENT</code> değerini 0,5'e çıkarın, sertse 0,3'e indirin.</p>
-    <p>Modeller Blender ile parametrik olarak üretildi. Ölçüleri değiştirmek isterseniz <a href="geometri-seti/generate_set.py" download>generate_set.py</a>, <a href="kesir-seti/generate_kesir.py" download>generate_kesir.py</a> ve <a href="sayi-dogrusu/generate_sayi_dogrusu.py" download>generate_sayi_dogrusu.py</a> ve <a href="daire-cetveli/generate_daire_cetveli.py" download>generate_daire_cetveli.py</a> betiklerini, ortak <a href="ortak/dokunsal.py" download>dokunsal.py</a> kütüphanesiyle birlikte kullanabilirsiniz. Blender dosyaları: <a href="geometri-seti/geometri_seti.blend" download>geometri seti</a>, <a href="kesir-seti/kesir_seti.blend" download>kesir seti</a>, <a href="sayi-dogrusu/sayi_dogrusu.blend" download>sayı doğrusu</a>, <a href="daire-cetveli/daire_cetveli.blend" download>daire çizim cetveli</a>.</p>
+    <p>Modeller Blender ile parametrik olarak üretildi. Ölçüleri değiştirmek isterseniz <a href="geometri-seti/generate_set.py" download>generate_set.py</a>, <a href="kesir-seti/generate_kesir.py" download>generate_kesir.py</a> ve <a href="sayi-dogrusu/generate_sayi_dogrusu.py" download>generate_sayi_dogrusu.py</a>, <a href="daire-cetveli/generate_daire_cetveli.py" download>generate_daire_cetveli.py</a> ve <a href="koordinat-tahtasi/generate_koordinat_tahtasi.py" download>generate_koordinat_tahtasi.py</a> betiklerini, ortak <a href="ortak/dokunsal.py" download>dokunsal.py</a> kütüphanesiyle birlikte kullanabilirsiniz. Blender dosyaları: <a href="geometri-seti/geometri_seti.blend" download>geometri seti</a>, <a href="kesir-seti/kesir_seti.blend" download>kesir seti</a>, <a href="sayi-dogrusu/sayi_dogrusu.blend" download>sayı doğrusu</a>, <a href="daire-cetveli/daire_cetveli.blend" download>daire çizim cetveli</a>, <a href="koordinat-tahtasi/koordinat_tahtasi.blend" download>koordinat tahtası</a>.</p>
 
     <h3 class="h5 mt-4" id="bambu-x2d">Bambu Lab X2D için hazır projeler</h3>
     <p>Bambu Lab X2D kullanıyorsanız aşağıdaki projeleri Bambu Studio'da açıp dilimleyerek doğrudan basabilirsiniz. Parçalar plakalara dizilmiş, renkler atanmıştır. Zemin ve kabartma aynı nesnenin iki ayrı parçası olduğu için duraklatmaya gerek yoktur; rengi yazıcı kendisi değiştirir.</p>
     <ul>
-      <li><strong>Filamentler:</strong> 1 beyaz (zemin), 2 siyah (kabartma). Sayı doğrusu projesinde 3 kırmızı ve 4 mavi kaydırıcılar içindir. Renkleri Bambu Studio'da değiştirebilirsiniz.</li>
+      <li><strong>Filamentler:</strong> 1 beyaz (zemin), 2 siyah (kabartma). Sayı doğrusu ve koordinat tahtası projelerinde 3 kırmızı ve 4 mavi kaydırıcılar ve pimler içindir. Renkleri Bambu Studio'da değiştirebilirsiniz.</li>
       <li><strong>Ayarlar:</strong> Bambu Lab X2D 0,4 mm nozul, 0.20mm Standard, Bambu PLA Basic, Textured PEI tabla.</li>
       <li><strong>Sayı doğrusu:</strong> Önce 1. plakayı (deneme rayı ve kaydırıcılar) basıp kaydırıcıların rayda nasıl oturduğunu deneyin. Bu plaka nesne nesne basılır; renk her katmanda değil, bir nesne bitince bir kez değişir.</li>
+      <li><strong>Koordinat tahtası:</strong> Önce 1. plakayı (pim deneme ve pimler) basıp pimin hangi deliğe oturduğunu deneyin. Projedeki tahta 5,0 mm delikle hazırlanmıştır; başka bir ölçü gerekirse <code>HOLE_D</code> değiştirilip tahta ve proje yeniden üretilmelidir.</li>
     </ul>
     <div class="table-responsive">
       <table class="table table-sm align-middle">
@@ -300,6 +363,13 @@
             <td>1 sa 13 dk</td>
             <td>35 g</td>
             <td><a class="btn btn-sm btn-outline-secondary" href="bambu-x2d/sayi_dogrusu_x2d.3mf" download aria-label="Sayı doğrusu Bambu Lab X2D projesini indir">3MF İndir</a></td>
+          </tr>
+          <tr>
+            <th scope="row">Koordinat tahtası</th>
+            <td>1. Pim deneme ve pimler<br>2. Koordinat tahtası</td>
+            <td>4 sa 35 dk</td>
+            <td>135 g</td>
+            <td><a class="btn btn-sm btn-outline-secondary" href="bambu-x2d/koordinat_tahtasi_x2d.3mf" download aria-label="Koordinat tahtası Bambu Lab X2D projesini indir">3MF İndir</a></td>
           </tr>
         </tbody>
       </table>

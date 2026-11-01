@@ -7,9 +7,12 @@ Calistirma:
 
 Cikti: onizleme/<stl_adi>.jpg (1200x800). Yalnizca bazilarini uretmek icin adlarini verin:
   ... --python onizleme_uret.py -- daire_cetveli
-onizleme/kaydirici.jpg bu betikle degil, sayi-dogrusu/onizleme_detay.png'den uretilir:
+onizleme/kaydirici.jpg ve onizleme/pimler.jpg bu betikle degil, uretec onizlemelerinden
+uretilir:
   sips -s format jpeg -s formatOptions 85 -z 800 1200 sayi-dogrusu/onizleme_detay.png \
       --out onizleme/kaydirici.jpg
+  sips -s format jpeg -s formatOptions 85 -z 800 1200 koordinat-tahtasi/onizleme_pim.png \
+      --out onizleme/pimler.jpg
 Gorunum geometri-seti/generate_set.py'deki render() ile ayni (workbench, turuncu parca).
 """
 import bpy
@@ -32,6 +35,7 @@ STLS = [
     ('kesir-seti/stl/kesir_1_4.stl', None),
     ('sayi-dogrusu/stl/sayi_dogrusu.stl', None),
     ('daire-cetveli/stl/daire_cetveli.stl', None),
+    ('koordinat-tahtasi/stl/koordinat_tahtasi.stl', None),
 ]
 RES = (1200, 800)
 TILT = 28.0

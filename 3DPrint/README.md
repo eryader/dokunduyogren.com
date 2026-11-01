@@ -12,6 +12,7 @@ Blender'da Python betikleriyle parametrik olarak üretilir. Web sayfası: [`inde
 | [`kesir-seti/`](kesir-seti/) | 1/1–1/12 kesir daireleri ve tabak |
 | [`sayi-dogrusu/`](sayi-dogrusu/) | −10…+10 sayı doğrusu, iki kaydırıcı ve deneme rayı |
 | [`daire-cetveli/`](daire-cetveli/) | Daire çizim cetveli (pergel yerine) ve delik deneme parçası |
+| [`koordinat-tahtasi/`](koordinat-tahtasi/) | Koordinat ve geometri tahtası, yuvarlak ve kare başlı pimler, pim deneme parçası |
 | [`bambu-x2d/`](bambu-x2d/) | Bambu Lab X2D için hazır Bambu Studio projeleri (.3mf) ve onları üreten betik |
 | [`ruler-01/`](ruler-01/) | İlk 10 cm dokunsal cetvel (STL ve G-code) |
 | [`onizleme/`](onizleme/) | Web sayfasındaki görseller ([`onizleme_uret.py`](onizleme_uret.py) üretir) |
@@ -46,11 +47,12 @@ proje adını ekleyin (`-- geometri_seti_x2d`); diğer 3MF dosyaları değişmez
 - **Dokunsal kodlama:** küçük nokta 1 cm / 10°, büyük nokta 5 cm / 30° / başlangıç, çizgi 10 cm / 90°.
   Bütün araçlarda aynı kalır.
 - **Çift format:** Braille'in yanında az gören öğrenciler için büyük punto (en az ~18 punto).
-- **Kontrast:** Kabartmalar zeminden ayrı renkte basılır. Duraklatma yükseklikleri: geometri seti ve
-  sayı doğrusu 3,0 mm, kesir parçaları 4,0 mm, tabak 5,4 mm.
+- **Kontrast:** Kabartmalar zeminden ayrı renkte basılır. Duraklatma yükseklikleri: geometri seti,
+  daire çizim cetveli ve sayı doğrusu 3,0 mm, kesir parçaları 4,0 mm, koordinat tahtası 5,0 mm,
+  tabak 5,4 mm.
 - **Boyut:** Her parça 220 × 220 mm tablaya (Ender 3 S1) sığar. Küçük çocuklarda yutma riskine
-  karşı parçaların 30 mm'nin altına inmemesi hedeflenir. Şu an tek istisna 24 mm'lik
-  kaydırıcılar; küçük yaşta gözetimle kullanılmalı.
+  karşı parçaların 30 mm'nin altına inmemesi hedeflenir. İstisnalar 24 mm'lik kaydırıcılar ve
+  10 mm'lik pimler; küçük yaşta gözetimle kullanılmalı (web sayfasında pimler için uyarı var).
 
 ## Yapılacaklar
 
@@ -60,7 +62,8 @@ Bir maddeyi bitirince `[ ]` işaretini `[x]` yapın.
 
 1. Geometri setine büyük punto rakamlar (daire çizim cetvelindeki gibi)
 2. SVG'den kabartma plaka aracı (katmanlı bir örnek SVG gerekiyor)
-3. Pimli tahta ailesi: koordinat / geometri tahtası, sütun grafik, yüzlük tablo
+3. Pimli tahta ailesinin devamı: sütun grafik, yüzlük tablo (koordinat tahtasının pimini ve deliğini
+   kullanır)
 4. Kesir çubukları ve onluk taban blokları
 
 ### Deneme ve onay
@@ -72,6 +75,9 @@ Bir maddeyi bitirince `[ ]` işaretini `[x]` yapın.
 - [ ] Deneme rayı ve kaydırıcı baskısı: sıkılık (`CLEAR`) ve tık gücü (`DETENT`)
 - [ ] Daire çizim cetveli denemesi: delik deneme parçasıyla tükenmez ve kurşun kaleme göre
       `HOLE_D` seçimi; çizim altlığında raptiyeyle ve merkezde dik tutulan kalemle daire çizmek
+- [ ] Koordinat tahtası denemesi: pim deneme parçasıyla `HOLE_D` seçimi; lastik gerilince pimin dik
+      durması; yuvarlak ve kare başın dokunarak ayırt edilmesi; eksen çizgilerinin ve orijinin
+      parmakla bulunması
 - [ ] Bambu Lab X2D projelerini Bambu Studio arayüzünde açıp birer plaka basmak (komut satırında
       dilimlenip denetlendi, arayüzde ve yazıcıda denenmedi)
 - [ ] Bir öğretmen ve birkaç öğrenciyle sınıf denemesi, geri bildirimlerin buraya işlenmesi
@@ -88,7 +94,7 @@ Bir maddeyi bitirince `[ ]` işaretini `[x]` yapın.
 - [ ] Sayı doğrusunun büyük sürümü (−5…+5, 2 cm birim, daha büyük rakam; ağır az görme için)
 - [ ] Kaydırıcıları 30 mm'nin üstüne büyütmeyi değerlendirmek (yutma riski)
 - [x] Daire çizim cetveli (pergel yerine): merkez deliği, 1–10 cm arası her 0,5 cm'de kalem deliği
-- [ ] Koordinat / geometri tahtası: kabartma ızgara, pim ve lastik
+- [x] Koordinat ve geometri tahtası: 11 × 11 delik, kabartma eksenler, yuvarlak ve kare başlı pimler, lastik
 - [ ] Geometrik cisimler: küp, prizma, piramit, silindir, koni, küre
 - [ ] Dokunsal saat: sürtünmeli akrep ve yelkovan
 - [ ] Döner kollu açı modeli: 30°, 45°, 60° ve 90°'de tık diye oturur
@@ -109,10 +115,12 @@ Bir maddeyi bitirince `[ ]` işaretini `[x]` yapın.
 
 ### Altyapı
 
-- [x] Bambu Lab X2D için hazır projeler: geometri seti, kesir seti, sayı doğrusu (iki renk, duraklatmasız)
+- [x] Bambu Lab X2D için hazır projeler: geometri seti, kesir seti, sayı doğrusu, koordinat tahtası
+      (iki renk, duraklatmasız)
 - [ ] SVG'den kabartma plaka aracı: `çizgi`, `doku-1`, `doku-2`, `etiket` katmanları; etiketler
       kendiliğinden Braille ve büyük puntoya çevrilir
-- [ ] Kütüphaneye pim / delik geçmesi ve döner eksen (menteşe)
+- [ ] Kütüphaneye pim / delik geçmesi ve döner eksen (menteşe). Havşalı delik kütüphanede
+      (`countersunk_holes`); pim şimdilik koordinat tahtası betiğinde
 - [ ] MEB kazanımlarına göre konu eşlemesi: hangi konu dokunarak öğretilmeli
 
 ### Fikir havuzu

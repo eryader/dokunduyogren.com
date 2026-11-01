@@ -468,6 +468,18 @@ def add_loft(bm, rings):
     bm.faces.new(vs[-1])
 
 
+def countersunk_holes(centers, d, depth, top):
+    """mesh_cut icin: her merkezde alttan uste d capli delik, ustte 45 derecelik havsa.
+    Havsanin ustteki capi d + 2 * depth. Govdeler birbirine degmemeli (bkz. boolean_solid)."""
+    r0 = d / 2
+
+    def fill(bm):
+        for c in centers:
+            add_loft(bm, [[(p.x, p.y, z) for p in circle(c, r, 48)]
+                          for r, z in ((r0, -1.0), (r0, top - depth), (r0 + depth + 0.3, top + 0.3))])
+    return fill
+
+
 def add_extrusion(bm, profile, origin, eu, ev, ew, w0, w1):
     """(u, v) duzlemindeki CCW profili ew yonunde w0..w1 arasi uzat (eu x ev = ew olmali)."""
     o = Vector(origin)

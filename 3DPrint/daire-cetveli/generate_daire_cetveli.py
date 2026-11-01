@@ -28,9 +28,10 @@ import sys
 
 sys.dont_write_bytecode = True
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'ortak'))
-from dokunsal import (BAR, BR_DOT, BR_PITCH, DOT_L, DOT_S, MARGIN, Piece, add_loft,  # noqa: E402
+from dokunsal import (BAR, BR_DOT, BR_PITCH, DOT_L, DOT_S, MARGIN, Piece,  # noqa: E402
                       braille_number, braille_width, build_object, circle, convex_hull,
-                      export_stl, render, report, reset_scene, rounded, save_blend, v2)
+                      countersunk_holes, export_stl, render, report, reset_scene, rounded,
+                      save_blend, v2)
 
 # ---------------------------------------------------------------------------
 # Olculer (mm). Merkez deligi orijinde, delikler +x yonunde, y = 0 cizgisinde.
@@ -54,24 +55,13 @@ Y_BR = Y_BAR[1] + BAR[0] + 0.5 + BR_PITCH + BR_DOT[0]           # Braille merkez
 Y_NUM = -(CS_R + MARGIN + NUM_H / 2 + 0.3)      # buyuk punto rakam merkezi
 
 
-def hole_cutter(centers, d):
-    """Her merkezde alttan uste delik + ustte 45 derecelik havsa (tek kapali govde)."""
-    r0 = d / 2
-
-    def fill(bm):
-        for c in centers:
-            add_loft(bm, [[(p.x, p.y, z) for p in circle(c, r, 48)]
-                          for r, z in ((r0, -1.0), (r0, T - CS_DEPTH), (r0 + CS_DEPTH + 0.3, T + 0.3))])
-    return fill
-
-
 def make_ruler():
     pts = circle(v2(0, 0), R_HUB, 96) + [v2(X_END, Y_BOT), v2(X_END, Y_TOP), v2(X_WIDE, Y_TOP)]
     outer = rounded(convex_hull(pts), 3.0)
     centers = [v2(0, 0)] + [v2(STEP * i, 0) for i in range(2, int(R_MAX / STEP) + 1)]
     keep = [circle(c, CS_R, 32) for c in centers]
     pc = Piece('daire_cetveli', outer, thickness=T, keepout=keep)
-    pc.mesh_cut.append(hole_cutter(centers, HOLE_D))
+    pc.mesh_cut.append(countersunk_holes(centers, HOLE_D, CS_DEPTH, T))
 
     for k in range(0, int(R_MAX // 10) + 1):
         x = 10.0 * k
@@ -96,7 +86,7 @@ def make_test(ds=(1.8, 2.0, 2.2, 2.4), pitch=14.0):
     keep = [circle(c, d / 2 + CS_DEPTH, 32) for c, d in zip(centers, ds)]
     pc = Piece('delik_deneme', outer, thickness=T, keepout=keep)
     for c, d in zip(centers, ds):
-        pc.mesh_cut.append(hole_cutter([c], d))
+        pc.mesh_cut.append(countersunk_holes([c], d, CS_DEPTH, T))
     for i, (c, d) in enumerate(zip(centers, ds)):
         n = i + 1
         for j in range(n):

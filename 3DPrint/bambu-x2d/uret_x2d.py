@@ -13,7 +13,7 @@ Ne yapar:
 1. Iki renkli her STL, renk degisim yuksekliginden ikiye bolunur: zemin (filament 1) ve kabartma
    (filament 2). Bambu Studio'da ikisi tek nesnenin iki parcasi olur, duraklatma gerekmez.
    Bolme degisim yuksekliginin 0,02 mm ustunden yapilir. 0,20 mm katmanda degisim yukseklikleri
-   (3,0 / 4,0 / 5,4) katman sinirina denk gelir: ustteki katman H+0,1'de dilimlenip kabartmaya,
+   (3,0 / 4,0 / 5,0 / 5,4) katman sinirina denk gelir: ustteki katman H+0,1'de dilimlenip kabartmaya,
    alttaki H-0,1'de dilimlenip zemine duser.
 2. Sistem on ayarlari (Bambu Lab X2D 0.4 nozzle, 0.20mm Standard @BBL X2D,
    Bambu PLA Basic @BBL X2D 0.4 nozzle) miras zinciri cozulerek duz JSON'a yazilir; komut satiri
@@ -76,6 +76,12 @@ def kesir_grid(ns):
     return [item('kesir-seti/stl/kesir_1_%d.stl' % n, 'Kesir 1/%d' % n, 4.0, at=c) for n, c in zip(ns, cells)]
 
 
+def pin_grid(rel, label, fil, x0, y0, cols=6, rows=2, step=15):
+    """Ayni pimden cols x rows tane; her biri ayri nesne (Bambu Studio'da tek tek silinebilir)."""
+    return [item(rel, '%s %d' % (label, r * cols + c + 1), fil=fil, at=(x0 + step * c, y0 + step * r))
+            for r in range(rows) for c in range(cols)]
+
+
 # (dosya, baslik, filament renkleri, plakalar)
 # plaka: ad, prime tower'in sol alt kosesi, nesne nesne basim (by object) mi, parcalar
 SETS = [
@@ -110,6 +116,16 @@ SETS = [
             item('sayi-dogrusu/stl/kaydirici_yuvarlak.stl', 'Kaydırıcı (yuvarlak uçlu)', fil=4, at=(190, 190))]),
         dict(name='2 - Sayı doğrusu', tower=(200, 190), items=[
             item('sayi-dogrusu/stl/sayi_dogrusu.stl', 'Sayı doğrusu', 3.0, at=(30, 100))]),
+    ]),
+    # Pim deneme parcasi pimlerle ayni plakada ve kirmizi basilir: plakada iki filament olur, her
+    # biri bir nozulda; katman katman renk degisimi olmaz. Tahta, delik olcusu secildikten sonra basilir.
+    ('koordinat_tahtasi_x2d', 'Koordinat tahtası', [BEYAZ, SIYAH, KIRMIZI, MAVI], [
+        dict(name='1 - Pim deneme ve pimler', tower=(200, 200), items=[
+            item('koordinat-tahtasi/stl/pim_deneme.stl', 'Pim deneme', fil=3, at=(30, 20))]
+            + pin_grid('koordinat-tahtasi/stl/pim_yuvarlak.stl', 'Pim (yuvarlak baş)', 3, 30, 60)
+            + pin_grid('koordinat-tahtasi/stl/pim_kare.stl', 'Pim (kare baş)', 4, 30, 100)),
+        dict(name='2 - Koordinat tahtası', tower=(200, 212), items=[
+            item('koordinat-tahtasi/stl/koordinat_tahtasi.stl', 'Koordinat tahtası', 5.0, at=(30, 6))]),
     ]),
 ]
 
