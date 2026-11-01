@@ -5,7 +5,8 @@ Calistirma:
   /Applications/Blender.app/Contents/MacOS/Blender -b --factory-startup \
       --python onizleme_uret.py
 
-Cikti: onizleme/<stl_adi>.jpg (1200x800).
+Cikti: onizleme/<stl_adi>.jpg (1200x800). Yalnizca bazilarini uretmek icin adlarini verin:
+  ... --python onizleme_uret.py -- daire_cetveli
 onizleme/kaydirici.jpg bu betikle degil, sayi-dogrusu/onizleme_detay.png'den uretilir:
   sips -s format jpeg -s formatOptions 85 -z 800 1200 sayi-dogrusu/onizleme_detay.png \
       --out onizleme/kaydirici.jpg
@@ -14,6 +15,7 @@ Gorunum geometri-seti/generate_set.py'deki render() ile ayni (workbench, turuncu
 import bpy
 import math
 import os
+import sys
 from mathutils import Matrix
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -29,6 +31,7 @@ STLS = [
     ('kesir-seti/stl/tabak.stl', None),
     ('kesir-seti/stl/kesir_1_4.stl', None),
     ('sayi-dogrusu/stl/sayi_dogrusu.stl', None),
+    ('daire-cetveli/stl/daire_cetveli.stl', None),
 ]
 RES = (1200, 800)
 TILT = 28.0
@@ -78,11 +81,14 @@ def render(scene, cam, obj, path):
 
 
 def main():
+    only = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
     bpy.ops.wm.read_factory_settings(use_empty=True)
     scene, cam = setup_scene()
     out = os.path.join(HERE, 'onizleme')
     os.makedirs(out, exist_ok=True)
     for rel, orient in STLS:
+        if only and os.path.splitext(os.path.basename(rel))[0] not in only:
+            continue
         bpy.ops.wm.stl_import(filepath=os.path.join(HERE, rel))
         obj = bpy.context.selected_objects[0]
         if orient is not None:

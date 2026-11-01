@@ -3,7 +3,8 @@ Bambu Lab X2D icin hazir baski projeleri (.3mf) uretir.
 
 Calistirma (3DPrint klasorunden):
   /Applications/Blender.app/Contents/MacOS/Blender -b --factory-startup \
-      --python bambu-x2d/uret_x2d.py
+      --python bambu-x2d/uret_x2d.py [-- geometri_seti_x2d ...]
+Proje adi verilirse yalnizca o projeler yeniden uretilir (digerleri degismez).
 
 Gerekenler: Bambu Studio 2.8 veya ustu (/Applications/BambuStudio.app). Bambu Studio en az bir kez
 acilmis olmali; sistem on ayarlari ~/Library/Application Support/BambuStudio/system/BBL altina iner.
@@ -36,6 +37,7 @@ import os
 import re
 import shutil
 import subprocess
+import sys
 import tempfile
 import zipfile
 from xml.sax.saxutils import escape
@@ -78,13 +80,17 @@ def kesir_grid(ns):
 # plaka: ad, prime tower'in sol alt kosesi, nesne nesne basim (by object) mi, parcalar
 SETS = [
     ('geometri_seti_x2d', 'Geometri seti', [BEYAZ, SIYAH], [
-        dict(name='1 - Cetvel ve 45° gönye', tower=(210, 205), items=[
+        # Daire cetveli ve delik deneme parcasi, gonyelerin hipotenusu ile tablanin sag kenari
+        # arasindaki bos seride dik konur.
+        dict(name='1 - Cetvel, 45° gönye ve daire çizim cetveli', tower=(210, 205), items=[
             item('geometri-seti/stl/cetvel_20cm.stl', 'Cetvel 20 cm', 3.0, at=(30, 12)),
-            item('geometri-seti/stl/gonye_45.stl', 'Gönye 45°', 3.0, at=(30, 54))]),
+            item('geometri-seti/stl/gonye_45.stl', 'Gönye 45°', 3.0, at=(30, 54)),
+            item('daire-cetveli/stl/daire_cetveli.stl', 'Daire çizim cetveli', 3.0, at=(214, 62), rot=90)]),
         # 30-60 gonye uzun kenari yatay, dik kosesi solda ustte; iletkinin duz kenarinin altina girer
-        dict(name='2 - İletki ve 30°-60° gönye', tower=(215, 20), items=[
+        dict(name='2 - İletki, 30°-60° gönye ve delik deneme', tower=(215, 20), items=[
             item('geometri-seti/stl/iletki_180.stl', 'İletki 180°', 3.0, at=(28, 140)),
-            item('geometri-seti/stl/gonye_30_60.stl', 'Gönye 30°-60°', 3.0, at=(28, 25), rot=-90)]),
+            item('geometri-seti/stl/gonye_30_60.stl', 'Gönye 30°-60°', 3.0, at=(28, 25), rot=-90),
+            item('daire-cetveli/stl/delik_deneme.stl', 'Delik deneme', 3.0, at=(224, 62), rot=90)]),
     ]),
     ('kesir_seti_x2d', 'Kesir seti', [BEYAZ, SIYAH], [
         # Plaka adinda "/" olursa komut satiri adi siliyor; kesirler yaziyla yazildi.
@@ -346,9 +352,12 @@ def check_set(path, work):
 
 
 def main():
+    only = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
     work = tempfile.mkdtemp(prefix='x2d_')
     presets = flat_presets(work)
     for fname, title, colours, plates in SETS:
+        if only and fname not in only:
+            continue
         out = build_set(fname, title, colours, plates, presets, work)
         check_set(out, work)
 

@@ -11,6 +11,7 @@ Blender'da Python betikleriyle parametrik olarak üretilir. Web sayfası: [`inde
 | [`geometri-seti/`](geometri-seti/) | 20 cm cetvel, 45° ve 30°-60° gönye, 180° iletki |
 | [`kesir-seti/`](kesir-seti/) | 1/1–1/12 kesir daireleri ve tabak |
 | [`sayi-dogrusu/`](sayi-dogrusu/) | −10…+10 sayı doğrusu, iki kaydırıcı ve deneme rayı |
+| [`daire-cetveli/`](daire-cetveli/) | Daire çizim cetveli (pergel yerine) ve delik deneme parçası |
 | [`bambu-x2d/`](bambu-x2d/) | Bambu Lab X2D için hazır Bambu Studio projeleri (.3mf) ve onları üreten betik |
 | [`ruler-01/`](ruler-01/) | İlk 10 cm dokunsal cetvel (STL ve G-code) |
 | [`onizleme/`](onizleme/) | Web sayfasındaki görseller ([`onizleme_uret.py`](onizleme_uret.py) üretir) |
@@ -37,7 +38,8 @@ STL'ler değişince Bambu Lab X2D projelerini de yeniden üretin (Bambu Studio 2
 Betik iki renkli parçaları zemin ve kabartma diye ikiye böler, plakalara dizer, projeyi Bambu
 Studio'nun komut satırıyla yazar ve yazılan projeyi dilimleyerek denetler. Her plaka için bir
 `PLAKA` satırı (süre, filament) yazar. Yeni bir parça eklenince betikteki `SETS` tablosuna
-plakadaki yeriyle birlikte eklenmeli.
+plakadaki yeriyle birlikte eklenmeli. Yalnızca bir projeyi yeniden üretmek için komutun sonuna
+proje adını ekleyin (`-- geometri_seti_x2d`); diğer 3MF dosyaları değişmez.
 
 ## Ortak kurallar
 
@@ -56,7 +58,7 @@ Bir maddeyi bitirince `[ ]` işaretini `[x]` yapın.
 
 ### Önerilen sıra
 
-1. Geometri setine büyük punto ve daire çizim cetveli (aynı altyapı, kısa iş)
+1. Geometri setine büyük punto rakamlar (daire çizim cetvelindeki gibi)
 2. SVG'den kabartma plaka aracı (katmanlı bir örnek SVG gerekiyor)
 3. Pimli tahta ailesi: koordinat / geometri tahtası, sütun grafik, yüzlük tablo
 4. Kesir çubukları ve onluk taban blokları
@@ -68,6 +70,8 @@ Bir maddeyi bitirince `[ ]` işaretini `[x]` yapın.
 - [ ] Tabak ve 1/4 seti deneme baskısı: pim, 0,5 mm kenar boşluğu, 0,3 mm parça aralığı, parmak oyuğu
 - [ ] `89b8b91` öncesi basılmış tabakları yeniden basmak (eski parmak oyuğu cebe çıkıntı yapıyordu)
 - [ ] Deneme rayı ve kaydırıcı baskısı: sıkılık (`CLEAR`) ve tık gücü (`DETENT`)
+- [ ] Daire çizim cetveli denemesi: delik deneme parçasıyla tükenmez ve kurşun kaleme göre
+      `HOLE_D` seçimi; çizim altlığında raptiyeyle ve merkezde dik tutulan kalemle daire çizmek
 - [ ] Bambu Lab X2D projelerini Bambu Studio arayüzünde açıp birer plaka basmak (komut satırında
       dilimlenip denetlendi, arayüzde ve yazıcıda denenmedi)
 - [ ] Bir öğretmen ve birkaç öğrenciyle sınıf denemesi, geri bildirimlerin buraya işlenmesi
@@ -83,7 +87,7 @@ Bir maddeyi bitirince `[ ]` işaretini `[x]` yapın.
 - [ ] Sayı doğrusunda negatif tarafı dokuyla ayırmak
 - [ ] Sayı doğrusunun büyük sürümü (−5…+5, 2 cm birim, daha büyük rakam; ağır az görme için)
 - [ ] Kaydırıcıları 30 mm'nin üstüne büyütmeyi değerlendirmek (yutma riski)
-- [ ] Daire çizim cetveli (pergel yerine): merkez pimi, her 0,5 cm'de kalem deliği
+- [x] Daire çizim cetveli (pergel yerine): merkez deliği, 1–10 cm arası her 0,5 cm'de kalem deliği
 - [ ] Koordinat / geometri tahtası: kabartma ızgara, pim ve lastik
 - [ ] Geometrik cisimler: küp, prizma, piramit, silindir, koni, küre
 - [ ] Dokunsal saat: sürtünmeli akrep ve yelkovan
