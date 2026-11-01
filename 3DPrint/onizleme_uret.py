@@ -6,6 +6,9 @@ Calistirma:
       --python onizleme_uret.py
 
 Cikti: onizleme/<stl_adi>.jpg (1200x800).
+onizleme/kaydirici.jpg bu betikle degil, sayi-dogrusu/onizleme_detay.png'den uretilir:
+  sips -s format jpeg -s formatOptions 85 -z 800 1200 sayi-dogrusu/onizleme_detay.png \
+      --out onizleme/kaydirici.jpg
 Gorunum geometri-seti/generate_set.py'deki render() ile ayni (workbench, turuncu parca).
 """
 import bpy
@@ -25,6 +28,7 @@ STLS = [
     ('ruler-01/tactile_ruler_beefier.stl', FLAT_ON_X),
     ('kesir-seti/stl/tabak.stl', None),
     ('kesir-seti/stl/kesir_1_4.stl', None),
+    ('sayi-dogrusu/stl/sayi_dogrusu.stl', None),
 ]
 RES = (1200, 800)
 TILT = 28.0

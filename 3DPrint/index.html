@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Dokun Duy Öğren - 3D Baskı Araçları</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Görme engelli ve az gören öğrenciler için 3D yazıcıyla basılabilen dokunsal cetvel, gönye, iletki ve kesir seti modelleri.">
+  <meta name="description" content="Görme engelli ve az gören öğrenciler için 3D yazıcıyla basılabilen dokunsal cetvel, gönye, iletki, kesir seti ve sayı doğrusu modelleri.">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 
@@ -14,7 +14,7 @@
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">3D Baskı Dokunsal Ders Araçları</h1>
-        <p class="lead text-muted">Görme engelli ve az gören öğrencilerin ölçüm ve çizim yapabilmesi, kesirleri dokunarak öğrenebilmesi için hazırladığımız cetvel, gönye, iletki ve kesir seti modelleri. STL dosyalarını indirip 3D yazıcıda ücretsiz olarak basabilirsiniz.</p>
+        <p class="lead text-muted">Görme engelli ve az gören öğrencilerin ölçüm ve çizim yapabilmesi, kesirleri ve tam sayıları dokunarak öğrenebilmesi için hazırladığımız cetvel, gönye, iletki, kesir seti ve sayı doğrusu modelleri. STL dosyalarını indirip 3D yazıcıda ücretsiz olarak basabilirsiniz.</p>
         <p>
           <a href="https://dokunduyogren.com" class="btn btn-warning my-2">Dokun Duy Öğren</a>
           <a href="https://eryader.org" class="btn btn-primary my-2" target="_blank">ERYADER</a>
@@ -182,11 +182,71 @@
     </div>
   </div>
 
+  <div class="container mt-5">
+    <h2 class="h4">Sayı Doğrusu</h2>
+    <p>−10'dan +10'a dokunsal sayı doğrusu ve üzerinde kayan iki işaretçi. Bir birim 1 cm'dir (cetvelle aynı). Görme engelli öğrenci dokunarak ve tıkları sayarak, az gören öğrenci büyük punto rakamlara bakarak kullanır.</p>
+    <ul>
+      <li><strong>Ray:</strong> sayı doğrusunun kendisi şeridin ortasındaki raydır. Her tam sayıda rayın üstünde bir oluk vardır; öğrenci parmağını rayda gezdirerek olukları sayar. Rayın iki ucu ok gibi sivrilir: doğru iki yana devam eder.</li>
+      <li><strong>Sıfır:</strong> ortadaki uzun çizgi ve büyük nokta. Solu eksi, sağı artıdır. 5'in katlarında da uzun çizgi vardır.</li>
+      <li><strong>Kaydırıcılar:</strong> raya uçtan geçer, her tam sayıda tık diye oturur. Ucu, gösterdiği sayının çizgisini işaret eder. Biri üçgen, biri yuvarlak uçludur; farklı renkte basın.</li>
+      <li><strong>Büyük punto ve Braille:</strong> her sayının üstünde yaklaşık 18 punto rakam, rayın altında −10, −5, 0, 5 ve 10 için Braille. Aradaki sayılar en yakın etiketten sayılarak bulunur. Negatif sayılar sayı işareti, eksi işareti (5-6, 3-6) ve rakamla yazılmıştır.</li>
+    </ul>
+    <p class="mb-1">Derste kullanım örnekleri:</p>
+    <ul>
+      <li><strong>Toplama ve çıkarma:</strong> (−3) + 5 için kaydırıcıyı −3'e koyun, sağa 5 tık itin: 2'de durur. Çıkarmada ve negatif sayı eklerken sola gidilir.</li>
+      <li><strong>Karşılaştırma:</strong> iki kaydırıcıyı −6 ve −2'ye koyun; sağdaki sayı büyüktür (−2 &gt; −6).</li>
+      <li><strong>Uzaklık ve mutlak değer:</strong> −3'ten 4'e kaç tık olduğunu sayın (7). Zıt sayılar (3 ve −3) sıfırdan aynı uzaklıktadır.</li>
+    </ul>
+  </div>
+
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      <div class="col">
+        <div class="card shadow-sm h-100">
+          <img class="img-fluid" src="onizleme/sayi_dogrusu.jpg" alt="Eksi 10'dan artı 10'a dokunsal sayı doğrusunun 3D modeli">
+          <div class="card-body d-flex flex-column">
+            <h3 class="h5 card-title">Sayı Doğrusu</h3>
+            <p class="card-text">−10'dan +10'a şerit. Her tam sayıda oluklu ray, çizgi ve büyük punto rakam; sıfırda büyük nokta; −10, −5, 0, 5 ve 10 için Braille.</p>
+            <div class="mt-auto d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <a class="btn btn-sm btn-outline-secondary" href="sayi-dogrusu/stl/sayi_dogrusu.stl" download>STL İndir</a>
+                <a class="btn btn-sm btn-outline-secondary" href="sayi-dogrusu/onizleme.png" target="_blank">Kaydırıcılarla</a>
+              </div>
+              <small class="text-muted">216 × 47 × 6 mm</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card shadow-sm h-100">
+          <img class="img-fluid" src="onizleme/kaydirici.jpg" alt="Sayı doğrusunun rayına takılı üçgen uçlu kaydırıcı, ucu eksi 3'ü gösteriyor">
+          <div class="card-body d-flex flex-column">
+            <h3 class="h5 card-title">Kaydırıcılar</h3>
+            <p class="card-text">Rayda kayan işaretçiler. Üstteki esnek dilin altındaki tırnak, her tam sayıdaki oluğa tık diye oturur. Ters basılır, destek gerekmez. Uzun şeridi basmadan önce kısa deneme rayıyla oturmasını deneyin.</p>
+            <div class="d-flex flex-wrap gap-1 mb-3">
+              <a class="btn btn-sm btn-outline-secondary" href="sayi-dogrusu/stl/kaydirici_ucgen.stl" download aria-label="Üçgen uçlu kaydırıcının STL dosyasını indir">Üçgen Uçlu</a>
+              <a class="btn btn-sm btn-outline-secondary" href="sayi-dogrusu/stl/kaydirici_yuvarlak.stl" download aria-label="Yuvarlak uçlu kaydırıcının STL dosyasını indir">Yuvarlak Uçlu</a>
+              <a class="btn btn-sm btn-outline-secondary" href="sayi-dogrusu/stl/ray_deneme.stl" download aria-label="Kısa deneme rayının STL dosyasını indir">Deneme Rayı</a>
+            </div>
+            <div class="mt-auto d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <a class="btn btn-sm btn-outline-secondary" href="sayi-dogrusu/onizleme_kaydirici.png" target="_blank">Baskı Yönü</a>
+              </div>
+              <small class="text-muted">24 × 18,5 × 4,9 mm</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="container my-5">
     <h2 class="h4">Baskı ve Kaynak Dosyalar</h2>
-    <p>Geometri seti ve kesir seti parçaları 220 × 220 mm tablaya (Creality Ender 3 S1) sığacak şekilde boyutlandırıldı. Hazır G-code dosyası Ender 3 S1 ve PLA için hazırlanmıştır; farklı bir yazıcıda STL dosyasını kendi dilimleyicinizde açın.</p>
-    <p>Az gören öğrenciler için iki renkli basabilirsiniz: dilimleyicide geometri setinde 3,0 mm'de, kesir parçalarında 4,0 mm'de, tabakta 5,4 mm'de duraklatıp filament değiştirin. Böylece kabartmalar zemin renginden ayrılır.</p>
-    <p>Modeller Blender ile parametrik olarak üretildi. Ölçüleri değiştirmek isterseniz <a href="geometri-seti/generate_set.py" download>generate_set.py</a> ve <a href="kesir-seti/generate_kesir.py" download>generate_kesir.py</a> betiklerini, ortak <a href="ortak/dokunsal.py" download>dokunsal.py</a> kütüphanesiyle birlikte kullanabilirsiniz. Blender dosyaları: <a href="geometri-seti/geometri_seti.blend" download>geometri seti</a>, <a href="kesir-seti/kesir_seti.blend" download>kesir seti</a>.</p>
+    <p>Bütün parçalar 220 × 220 mm tablaya (Creality Ender 3 S1) sığacak şekilde boyutlandırıldı. Hazır G-code dosyası Ender 3 S1 ve PLA için hazırlanmıştır; farklı bir yazıcıda STL dosyasını kendi dilimleyicinizde açın.</p>
+    <p>Az gören öğrenciler için iki renkli basabilirsiniz: dilimleyicide geometri setinde ve sayı doğrusunda 3,0 mm'de, kesir parçalarında 4,0 mm'de, tabakta 5,4 mm'de duraklatıp filament değiştirin. Böylece kabartmalar zemin renginden ayrılır. En iyi sonuç açık renk zemin (beyaz ya da sarı) ve koyu kabartmayla (siyah) alınır.</p>
+    <p>Kaydırıcıların rayda ne kadar sıkı oturacağı yazıcıya göre değişir. Önce deneme rayını ve kaydırıcıları basın. Kaydırıcı sıkıysa betikteki <code>CLEAR</code> değerini büyütün (0,35–0,4); tık zayıfsa <code>DETENT</code> değerini 0,5'e çıkarın, sertse 0,3'e indirin.</p>
+    <p>Modeller Blender ile parametrik olarak üretildi. Ölçüleri değiştirmek isterseniz <a href="geometri-seti/generate_set.py" download>generate_set.py</a>, <a href="kesir-seti/generate_kesir.py" download>generate_kesir.py</a> ve <a href="sayi-dogrusu/generate_sayi_dogrusu.py" download>generate_sayi_dogrusu.py</a> betiklerini, ortak <a href="ortak/dokunsal.py" download>dokunsal.py</a> kütüphanesiyle birlikte kullanabilirsiniz. Blender dosyaları: <a href="geometri-seti/geometri_seti.blend" download>geometri seti</a>, <a href="kesir-seti/kesir_seti.blend" download>kesir seti</a>, <a href="sayi-dogrusu/sayi_dogrusu.blend" download>sayı doğrusu</a>.</p>
   </div>
 
   <footer class="text-muted py-5">
