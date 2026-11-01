@@ -9,7 +9,9 @@ Parcalar:
   tabak          : kesir dairelerinin oturdugu tabak. Ortadaki pim, parcalarin uclarini
                    merkeze toplar; kenar parcalari disaridan tutar. Saat 12'de buyuk nokta
                    = baslangic isareti (kesirler buradan saat yonunde dizilip karsilastirilir).
-                   Saat 3 ve 9'da parmak oyugu (parcayi kaldirmak icin). Tutma dilinde
+                   Saat 3 ve 9'da parmak oyugu: kenar kesilir, zemin cep icinde basamaksiz
+                   bir egimle iner. Parcanin dis kenari egimin uzerine 1 mm tasar; kenara
+                   bastirinca parcanin ucu kalkar, tirnak altina girer. Tutma dilinde
                    Braille "kesir" ve buyuk punto "KESİR".
   kesir_1_N      : 1/N parcalari (N adet), her parcada
                    - merkezden disa dogru okunan Braille kesir (pay normal, payda alt rakam)
@@ -24,9 +26,9 @@ import sys
 
 sys.dont_write_bytecode = True
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'ortak'))
-from dokunsal import (DOT_L, SINK, Piece, braille_fraction, braille_width, braille_word,  # noqa: E402
-                      build_object, circle, convex_hull, export_stl, left_normal, merge_objects,
-                      polar, render, report, reset_scene, rounded, save_blend, v2)
+from dokunsal import (DOT_L, SINK, Piece, add_loft, braille_fraction, braille_width,  # noqa: E402
+                      braille_word, build_object, circle, convex_hull, export_stl, left_normal,
+                      merge_objects, polar, render, report, reset_scene, rounded, save_blend, v2)
 
 # ---------------------------------------------------------------------------
 # Olculer (mm)
@@ -49,7 +51,9 @@ BOSS_R = RC - 0.4       # merkez pimi
 TAB_W = 46.0            # tutma dili genisligi
 TAB_D = 26.0            # tutma dilinin kenardan tasma miktari
 SCOOP_R = 9.0           # parmak oyugu yaricapi
-SCOOP_DEPTH = 1.2       # parmak oyugunun tabana inme derinligi
+SCOOP_DEPTH = 1.2       # parmak oyugunun tabandan asagi inme derinligi
+LIFT_RUN = 1.5          # oyuk zemininin cep icine egimle girdigi mesafe (parca kenari
+                        # bunun 1 mm'si uzerine tasar; dik basamak yok, parca takilmaz)
 
 
 def arc(r, deg0, deg1, step=1.0):
@@ -79,6 +83,36 @@ def make_piece(n):
     return pc
 
 
+def crescent(c, rs, ri, n_out=40, n_in=16):
+    """c merkezli rs cemberinin, tabak merkezli ri cemberi disinda kalan kismi (CCW).
+    Nokta sayisi ri'den bagimsiz; farkli ri'lerle halkalar birlestirilebilir."""
+    d = c.length
+    base = math.atan2(c.y, c.x)
+    psi = math.acos((d * d + rs * rs - ri * ri) / (2 * d * rs))
+    phi = math.acos((ri * ri + d * d - rs * rs) / (2 * ri * d))
+    pts = []
+    for j in range(n_out + 1):          # oyuk cemberinin dis yayi
+        t = base - (math.pi - psi) + 2 * (math.pi - psi) * j / n_out
+        pts.append(c + v2(math.cos(t), math.sin(t)) * rs)
+    for j in range(1, n_in):            # cep cemberi uzerindeki ic yay (geri donus)
+        t = base + phi - 2 * phi * j / n_in
+        pts.append(v2(math.cos(t), math.sin(t)) * ri)
+    return pts
+
+
+def scoop_cutter(s, top):
+    """Parmak oyugu: kenari keser, cep icinde ise zemini basamaksiz egimle indirir."""
+    r0 = R + CLEAR
+    slope = LIFT_RUN / SCOOP_DEPTH            # yatay / dusey
+    z_hi = FLOOR + 0.6                        # egim tabanin biraz ustune kadar surer
+    r_hi = r0 - (z_hi - (FLOOR - SCOOP_DEPTH)) * slope
+    levels = [(FLOOR - SCOOP_DEPTH, r0), (z_hi, r_hi), (top + 0.9, r_hi)]
+
+    def fill(bm):
+        add_loft(bm, [[(p.x, p.y, z) for p in crescent(s, SCOOP_R, ri)] for z, ri in levels])
+    return fill
+
+
 def make_plate():
     rp = R + CLEAR + RIM_W
     top = FLOOR + RIM_H
@@ -91,7 +125,7 @@ def make_plate():
                keepout=[pocket] + [circle(s, SCOOP_R, 48) for s in scoops])
     pc.cyl_cut.append((v2(0, 0), R + CLEAR, FLOOR, top + 1.0))
     for s in scoops:
-        pc.cyl_cut.append((s, SCOOP_R, FLOOR - SCOOP_DEPTH, top + 1.0))
+        pc.mesh_cut.append(scoop_cutter(s, top))
     pc.cyl_add.append((v2(0, 0), BOSS_R, FLOOR - SINK, top))
 
     pc.add(v2(0, R + CLEAR + RIM_W / 2), None, DOT_L, 'baslangic isareti')

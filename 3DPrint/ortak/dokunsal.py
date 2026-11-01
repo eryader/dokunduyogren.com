@@ -55,6 +55,20 @@ def braille_number(text):
     return [BRAILLE_NUM_SIGN] + [BRAILLE_DIGITS[c] for c in text]
 
 
+BRAILLE_SIGN_PREFIX = (5, 6)    # islem isaretlerinin onek hucresi
+BRAILLE_MINUS = (3, 6)
+BRAILLE_PLUS = (2, 6)
+
+
+def braille_signed(n):
+    """Isaretli tam sayi: -3 -> sayi isareti + (5,6)(3,6) + c.
+    Duxbury Turk Braille matematik dizinindeki '-3 #;-c' ornegine gore; ogretmen onayi bekleniyor."""
+    if n >= 0:
+        return braille_number(str(n))
+    return ([BRAILLE_NUM_SIGN, BRAILLE_SIGN_PREFIX, BRAILLE_MINUS]
+            + [BRAILLE_DIGITS[c] for c in str(-n)])
+
+
 def braille_fraction(p, q):
     """Pay normal rakam, payda alt rakam: 1/4 -> sayi isareti + 1 + alt 4.
     Turk Braille matematik gosterimi icin ogretmen onayi bekleniyor."""
@@ -302,6 +316,11 @@ class Piece:
         self.notches = []    # kenar uzerindeki centik merkezleri
         self.cyl_add = []    # (merkez, r, z0, z1) eklenen silindirler
         self.cyl_cut = []    # (merkez, r, z0, z1) oyulan silindirler
+        # f(bm) bicimli fonksiyonlar; her biri bm'e kapali govde(ler) ekler. Ayni
+        # fonksiyonun govdeleri birbirine degmemeli (bkz. build_object).
+        self.mesh_add = []       # eklenen govdeler
+        self.mesh_cut = []       # oyulan govdeler
+        self.mesh_cut_last = []  # eklemelerden SONRA oyulanlar (ray ustundeki oluklar gibi)
         self.skipped = []
 
     def _free(self, p, clearance):
@@ -337,10 +356,11 @@ class Piece:
         self.skipped.append(label)
         return False
 
-    def add_braille(self, cells, place, label, nudge=6.0):
-        """place(x, y) -> dunya noktasi; x okuma yonu, y yukari. Sigmazsa okuma yonunde kaydir."""
+    def add_braille(self, cells, place, label, nudge=3.0):
+        """place(x, y) -> dunya noktasi; x okuma yonu, y yukari. Sigmazsa okuma yonunde
+        0.5 mm adimlarla en fazla nudge mm kaydir."""
         dots = braille_layout(cells)
-        for k in range(int(nudge * 2) + 1):
+        for k in range(int(nudge * 4) + 1):
             dx = (k + 1) // 2 * 0.5 * (-1 if k % 2 else 1)
             items = [(place(x + dx, y), None, BR_DOT[0], BR_DOT[1]) for x, y in dots]
             if self.add_group(items):
@@ -436,6 +456,29 @@ def add_prism(bm, pts, z0, z1):
     bm.faces.new(hi)
 
 
+def add_loft(bm, rings):
+    """Esit nokta sayili kapali halkalari sirayla birlestir, iki ucu kapat.
+    Halkalar ilerleme yonune bakildiginda CCW olmali (add_prism ile ayni yonelim)."""
+    vs = [[bm.verts.new(tuple(p)) for p in r] for r in rings]
+    bm.faces.new(vs[0][::-1])
+    for lo, hi in zip(vs, vs[1:]):
+        n = len(lo)
+        for i in range(n):
+            bm.faces.new((lo[i], lo[(i + 1) % n], hi[(i + 1) % n], hi[i]))
+    bm.faces.new(vs[-1])
+
+
+def add_extrusion(bm, profile, origin, eu, ev, ew, w0, w1):
+    """(u, v) duzlemindeki CCW profili ew yonunde w0..w1 arasi uzat (eu x ev = ew olmali)."""
+    o = Vector(origin)
+    eu, ev, ew = Vector(eu), Vector(ev), Vector(ew)
+    add_loft(bm, [[o + eu * p[0] + ev * p[1] + ew * w for p in profile] for w in (w0, w1)])
+
+
+def add_box(bm, x0, x1, y0, y1, z0, z1):
+    add_prism(bm, [v2(x0, y0), v2(x1, y0), v2(x1, y1), v2(x0, y1)], z0, z1)
+
+
 def add_bump(bm, p0, p1, r, h, z0, n=24):
     """Kubbe (p0 == p1) ya da kapsul; alt kismi SINK kadar plakaya gomulu."""
     thetas = [math.radians(a) for a in (0, 22, 40, 55, 67, 77, 85)]
@@ -458,32 +501,26 @@ def add_text_mesh(bm, shape, center, U, up, z0):
         bm.faces.new([vs[i] for i in f])
 
 
-def tool_mesh(pc):
+def mesh_of(name, fill):
+    """fill(bm) ile doldurulan yeni mesh."""
     bm = bmesh.new()
-    top = pc.thickness
-    for p0, p1, r, h in pc.bumps:
-        add_bump(bm, p0, p1, r, h, top)
-    for shape, center, U, up in pc.texts:
-        add_text_mesh(bm, shape, center, U, up, top)
-    for c, r, z0, z1 in pc.cyl_add:
-        add_prism(bm, circle(c, r, 48), z0, z1)
+    fill(bm)
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
-    me = bpy.data.meshes.new(pc.name + '_ekle')
+    me = bpy.data.meshes.new(name)
     bm.to_mesh(me)
     bm.free()
     return me
 
 
-def cutter_mesh(pc):
-    bm = bmesh.new()
-    for c in pc.notches:
-        add_prism(bm, circle(c, NOTCH_R, 24), -1.0, pc.thickness + 2.0)
-    for c, r, z0, z1 in pc.cyl_cut:
-        add_prism(bm, circle(c, r, 96), z0, z1)
-    me = bpy.data.meshes.new(pc.name + '_oy')
-    bm.to_mesh(me)
-    bm.free()
-    return me
+def tool_mesh(pc):
+    """Kabartma noktalar/cizgiler + buyuk punto yazi (birbirine degmezler, _fits denetler)."""
+    def fill(bm):
+        top = pc.thickness
+        for p0, p1, r, h in pc.bumps:
+            add_bump(bm, p0, p1, r, h, top)
+        for shape, center, U, up in pc.texts:
+            add_text_mesh(bm, shape, center, U, up, top)
+    return mesh_of(pc.name + '_ekle', fill)
 
 
 def mesh_report(me):
@@ -510,55 +547,78 @@ def mesh_report(me):
     return nonman, vol, shells
 
 
-def build_object(pc):
-    """Plaka - (centik + oyma) + (kabartma + yazi + ek silindir). Tek, kapali govde dondurur."""
+def boolean_solid(name, base_me, ops):
+    """base_me uzerine sirayla (islem, mesh) uygula; tek, kapali govde dondurur.
+
+    Ayni kesici/ekleyici mesh icinde birbirine giren iki kapali govde olmamali: boolean
+    ortak bolgeyi iki kez sayar ve orayi bos birakmak yerine dolu birakir. Bu yuzden
+    ust uste binebilecek her govde ayri bir islem olarak verilir."""
     coll = bpy.context.scene.collection
-    plate = bpy.data.objects.new(pc.name, plate_mesh(pc))
-    coll.objects.link(plate)
+    obj = bpy.data.objects.new(name, base_me)
+    coll.objects.link(obj)
     helpers = []
-    ops = []
-    if pc.notches or pc.cyl_cut:
-        cut = bpy.data.objects.new(pc.name + '_oy', cutter_mesh(pc))
-        helpers.append(cut)
-        ops.append(('DIFFERENCE', cut))
-    if pc.bumps or pc.texts or pc.cyl_add:
-        add = bpy.data.objects.new(pc.name + '_ekle', tool_mesh(pc))
-        helpers.append(add)
-        ops.append(('UNION', add))
-    for h in helpers:
+    for i, (op, me) in enumerate(ops):
+        h = bpy.data.objects.new('%s_%02d' % (name, i), me)
         coll.objects.link(h)
+        helpers.append((op, h))
     result = None
     for solver in ('MANIFOLD', 'EXACT'):
         mods = []
         try:
-            for op, ob in ops:
-                mod = plate.modifiers.new(op.lower(), 'BOOLEAN')
+            for op, h in helpers:
+                mod = obj.modifiers.new(h.name, 'BOOLEAN')
                 mods.append(mod)
                 mod.operation = op
-                mod.object = ob
+                mod.object = h
                 mod.solver = solver
         except TypeError:
             for mod in mods:
-                plate.modifiers.remove(mod)
+                obj.modifiers.remove(mod)
             continue
-        me = bpy.data.meshes.new_from_object(plate.evaluated_get(bpy.context.evaluated_depsgraph_get()))
+        me = bpy.data.meshes.new_from_object(obj.evaluated_get(bpy.context.evaluated_depsgraph_get()))
         for mod in mods:
-            plate.modifiers.remove(mod)
+            obj.modifiers.remove(mod)
         nonman, vol, shells = mesh_report(me)
         if nonman == 0 and vol > 0 and shells == 1:
             result = (me, solver, vol)
             break
-        print('  %s: %s cozumu basarisiz (acik kenar=%d, govde=%d)' % (pc.name, solver, nonman, shells))
+        print('  %s: %s cozumu basarisiz (acik kenar=%d, govde=%d)' % (name, solver, nonman, shells))
         bpy.data.meshes.remove(me)
-    assert result, pc.name + ': boolean birlesim basarisiz'
+    assert result, name + ': boolean birlesim basarisiz'
     me, solver, vol = result
-    old = plate.data
-    plate.data = me
-    me.name = pc.name
+    old = obj.data
+    obj.data = me
+    me.name = name
     bpy.data.meshes.remove(old)
-    for h in helpers:
+    for _, h in helpers:
+        hm = h.data
         bpy.data.objects.remove(h)
-    return plate, solver, vol
+        bpy.data.meshes.remove(hm)
+    return obj, solver, vol
+
+
+def build_object(pc):
+    """Plaka - centikler - oymalar + kabartma/yazi + eklenen govdeler - son oymalar."""
+    n = pc.name
+    ops = []
+    if pc.notches:
+        ops.append(('DIFFERENCE', mesh_of(n + '_centik', lambda bm: [
+            add_prism(bm, circle(c, NOTCH_R, 24), -1.0, pc.thickness + 2.0) for c in pc.notches])))
+    for c, r, z0, z1 in pc.cyl_cut:
+        ops.append(('DIFFERENCE', mesh_of(n + '_oy', lambda bm, c=c, r=r, z0=z0, z1=z1:
+                                          add_prism(bm, circle(c, r, 96), z0, z1))))
+    for f in pc.mesh_cut:
+        ops.append(('DIFFERENCE', mesh_of(n + '_oy', f)))
+    if pc.bumps or pc.texts:
+        ops.append(('UNION', tool_mesh(pc)))
+    for c, r, z0, z1 in pc.cyl_add:
+        ops.append(('UNION', mesh_of(n + '_ekle', lambda bm, c=c, r=r, z0=z0, z1=z1:
+                                     add_prism(bm, circle(c, r, 48), z0, z1))))
+    for f in pc.mesh_add:
+        ops.append(('UNION', mesh_of(n + '_ekle', f)))
+    for f in pc.mesh_cut_last:
+        ops.append(('DIFFERENCE', mesh_of(n + '_oy', f)))
+    return boolean_solid(n, plate_mesh(pc), ops)
 
 
 def merge_objects(name, placed):
