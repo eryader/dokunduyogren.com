@@ -11,6 +11,7 @@ Blender'da Python betikleriyle parametrik olarak üretilir. Web sayfası: [`inde
 | [`geometri-seti/`](geometri-seti/) | 20 cm cetvel, 45° ve 30°-60° gönye, 180° iletki |
 | [`kesir-seti/`](kesir-seti/) | 1/1–1/12 kesir daireleri ve tabak |
 | [`sayi-dogrusu/`](sayi-dogrusu/) | −10…+10 sayı doğrusu, iki kaydırıcı ve deneme rayı |
+| [`bambu-x2d/`](bambu-x2d/) | Bambu Lab X2D için hazır Bambu Studio projeleri (.3mf) ve onları üreten betik |
 | [`ruler-01/`](ruler-01/) | İlk 10 cm dokunsal cetvel (STL ve G-code) |
 | [`onizleme/`](onizleme/) | Web sayfasındaki görseller ([`onizleme_uret.py`](onizleme_uret.py) üretir) |
 
@@ -25,6 +26,18 @@ Her betik STL'leri `stl/` klasörüne, önizlemeleri ve `.blend` dosyasını ken
 
 Çıktıda her parça için bir `PARCA` satırı yazar: boyut, hacim, gövde sayısı, açık kenar ve
 tablaya sığıp sığmadığı. `acik kenar=0` ve beklenen gövde sayısı görülmeden STL kullanılmamalı.
+
+STL'ler değişince Bambu Lab X2D projelerini de yeniden üretin (Bambu Studio 2.8 veya üstü gerekir):
+
+```sh
+/Applications/Blender.app/Contents/MacOS/Blender -b --factory-startup \
+    --python bambu-x2d/uret_x2d.py
+```
+
+Betik iki renkli parçaları zemin ve kabartma diye ikiye böler, plakalara dizer, projeyi Bambu
+Studio'nun komut satırıyla yazar ve yazılan projeyi dilimleyerek denetler. Her plaka için bir
+`PLAKA` satırı (süre, filament) yazar. Yeni bir parça eklenince betikteki `SETS` tablosuna
+plakadaki yeriyle birlikte eklenmeli.
 
 ## Ortak kurallar
 
@@ -55,6 +68,8 @@ Bir maddeyi bitirince `[ ]` işaretini `[x]` yapın.
 - [ ] Tabak ve 1/4 seti deneme baskısı: pim, 0,5 mm kenar boşluğu, 0,3 mm parça aralığı, parmak oyuğu
 - [ ] `89b8b91` öncesi basılmış tabakları yeniden basmak (eski parmak oyuğu cebe çıkıntı yapıyordu)
 - [ ] Deneme rayı ve kaydırıcı baskısı: sıkılık (`CLEAR`) ve tık gücü (`DETENT`)
+- [ ] Bambu Lab X2D projelerini Bambu Studio arayüzünde açıp birer plaka basmak (komut satırında
+      dilimlenip denetlendi, arayüzde ve yazıcıda denenmedi)
 - [ ] Bir öğretmen ve birkaç öğrenciyle sınıf denemesi, geri bildirimlerin buraya işlenmesi
 
 ### 1. kutu: Matematik ve geometri
@@ -90,6 +105,7 @@ Bir maddeyi bitirince `[ ]` işaretini `[x]` yapın.
 
 ### Altyapı
 
+- [x] Bambu Lab X2D için hazır projeler: geometri seti, kesir seti, sayı doğrusu (iki renk, duraklatmasız)
 - [ ] SVG'den kabartma plaka aracı: `çizgi`, `doku-1`, `doku-2`, `etiket` katmanları; etiketler
       kendiliğinden Braille ve büyük puntoya çevrilir
 - [ ] Kütüphaneye pim / delik geçmesi ve döner eksen (menteşe)

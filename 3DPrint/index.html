@@ -247,6 +247,45 @@
     <p>Az gören öğrenciler için iki renkli basabilirsiniz: dilimleyicide geometri setinde ve sayı doğrusunda 3,0 mm'de, kesir parçalarında 4,0 mm'de, tabakta 5,4 mm'de duraklatıp filament değiştirin. Böylece kabartmalar zemin renginden ayrılır. En iyi sonuç açık renk zemin (beyaz ya da sarı) ve koyu kabartmayla (siyah) alınır.</p>
     <p>Kaydırıcıların rayda ne kadar sıkı oturacağı yazıcıya göre değişir. Önce deneme rayını ve kaydırıcıları basın. Kaydırıcı sıkıysa betikteki <code>CLEAR</code> değerini büyütün (0,35–0,4); tık zayıfsa <code>DETENT</code> değerini 0,5'e çıkarın, sertse 0,3'e indirin.</p>
     <p>Modeller Blender ile parametrik olarak üretildi. Ölçüleri değiştirmek isterseniz <a href="geometri-seti/generate_set.py" download>generate_set.py</a>, <a href="kesir-seti/generate_kesir.py" download>generate_kesir.py</a> ve <a href="sayi-dogrusu/generate_sayi_dogrusu.py" download>generate_sayi_dogrusu.py</a> betiklerini, ortak <a href="ortak/dokunsal.py" download>dokunsal.py</a> kütüphanesiyle birlikte kullanabilirsiniz. Blender dosyaları: <a href="geometri-seti/geometri_seti.blend" download>geometri seti</a>, <a href="kesir-seti/kesir_seti.blend" download>kesir seti</a>, <a href="sayi-dogrusu/sayi_dogrusu.blend" download>sayı doğrusu</a>.</p>
+
+    <h3 class="h5 mt-4" id="bambu-x2d">Bambu Lab X2D için hazır projeler</h3>
+    <p>Bambu Lab X2D kullanıyorsanız aşağıdaki projeleri Bambu Studio'da açıp dilimleyerek doğrudan basabilirsiniz. Parçalar plakalara dizilmiş, renkler atanmıştır. Zemin ve kabartma aynı nesnenin iki ayrı parçası olduğu için duraklatmaya gerek yoktur; rengi yazıcı kendisi değiştirir.</p>
+    <ul>
+      <li><strong>Filamentler:</strong> 1 beyaz (zemin), 2 siyah (kabartma). Sayı doğrusu projesinde 3 kırmızı ve 4 mavi kaydırıcılar içindir. Renkleri Bambu Studio'da değiştirebilirsiniz.</li>
+      <li><strong>Ayarlar:</strong> Bambu Lab X2D 0,4 mm nozul, 0.20mm Standard, Bambu PLA Basic, Textured PEI tabla.</li>
+      <li><strong>Sayı doğrusu:</strong> Önce 1. plakayı (deneme rayı ve kaydırıcılar) basıp kaydırıcıların rayda nasıl oturduğunu deneyin. Bu plaka nesne nesne basılır; renk her katmanda değil, bir nesne bitince bir kez değişir.</li>
+    </ul>
+    <div class="table-responsive">
+      <table class="table table-sm align-middle">
+        <thead>
+          <tr><th scope="col">Proje</th><th scope="col">Plakalar</th><th scope="col">Süre</th><th scope="col">Filament</th><th scope="col"><span class="visually-hidden">İndir</span></th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Geometri seti</th>
+            <td>1. Cetvel ve 45° gönye<br>2. İletki ve 30°-60° gönye</td>
+            <td>2 sa 7 dk</td>
+            <td>76 g</td>
+            <td><a class="btn btn-sm btn-outline-secondary" href="bambu-x2d/geometri_seti_x2d.3mf" download aria-label="Geometri seti Bambu Lab X2D projesini indir">3MF İndir</a></td>
+          </tr>
+          <tr>
+            <th scope="row">Kesir seti</th>
+            <td>1. Tabak ve bütün<br>2. Yarım, üçte bir, çeyrek, beşte bir<br>3. Altıda, sekizde, onda, on ikide bir</td>
+            <td>5 sa 30 dk</td>
+            <td>227 g</td>
+            <td><a class="btn btn-sm btn-outline-secondary" href="bambu-x2d/kesir_seti_x2d.3mf" download aria-label="Kesir seti Bambu Lab X2D projesini indir">3MF İndir</a></td>
+          </tr>
+          <tr>
+            <th scope="row">Sayı doğrusu</th>
+            <td>1. Deneme rayı ve kaydırıcılar<br>2. Sayı doğrusu</td>
+            <td>1 sa 13 dk</td>
+            <td>35 g</td>
+            <td><a class="btn btn-sm btn-outline-secondary" href="bambu-x2d/sayi_dogrusu_x2d.3mf" download aria-label="Sayı doğrusu Bambu Lab X2D projesini indir">3MF İndir</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small text-muted">Süre ve filament miktarı Bambu Studio'nun tahminidir. Projeler STL dosyalarından <a href="bambu-x2d/uret_x2d.py" download>uret_x2d.py</a> betiğiyle üretilir.</p>
   </div>
 
   <footer class="text-muted py-5">
