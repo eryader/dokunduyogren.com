@@ -17,9 +17,10 @@ Parcalar:
   pim_kare          : Kare basli pim; baska renkte basilir. Iki nokta kumesini ya da bir seklin
                       koseleriyle ayri noktalari dokunarak ayirmak icin.
   pim_deneme        : 4,8 / 4,9 / 5,0 / 5,1 / 5,2 mm bes delik; ustunde 1-5 nokta, altinda olcu.
-                      Pim hangi delikte dik ve sikica durup elle rahat cikiyorsa betikteki HOLE_D
-                      o olcu yapilip tahta yeniden uretilir.
+                      Pim hangi delikte dik ve sikica durup elle rahat cikiyorsa ortak/pim.py'deki
+                      HOLE_D o olcu yapilip tahta yeniden uretilir.
 
+Pim ve delik olculeri ortak/pim.py'dedir; yuzluk tablonun pimleri ve delikleri de aynidir.
 Pimler basi tablaya gelecek sekilde ters basilir; destek gerekmez. Pimin flansi deligin havsasini
 kapatir, eksen cizgileri ve etiketler flansin disinda kalir: eksen uzerindeki noktalara da pim
 dik oturur.
@@ -31,11 +32,13 @@ import sys
 
 sys.dont_write_bytecode = True
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'ortak'))
-from dokunsal import (BAR, BR_DOT, BR_PITCH, DOT_S, MARGIN, SINK, Piece,  # noqa: E402
-                      add_bump, add_loft, add_prism, boolean_solid, braille_signed, braille_width, build_object, circle, convex_hull,
-                      countersunk_holes, export_stl, mesh_of, render, report, reset_scene,
-                      rounded, save_blend, text_shape, v2)
-import bmesh  # noqa: E402
+from dokunsal import (BAR, BR_DOT, BR_PITCH, MARGIN, SINK, Piece,  # noqa: E402
+                      add_bump, add_prism, braille_signed, braille_width, build_object, circle,
+                      convex_hull, export_stl, mesh_of, render, report, reset_scene, rounded,
+                      save_blend, text_shape, v2)
+from pim import (BOARD_T as T, CLR, CS_DEPTH, CS_R, FLANGE_D, HOLE_D, POST_D,  # noqa: E402
+                 POST_Z0, SHANK_D, check_pin_fit, hole_keepout, make_pin, make_pin_test,
+                 pin_holes, printed_pin, transformed)
 import bpy  # noqa: E402
 
 # ---------------------------------------------------------------------------
@@ -44,29 +47,10 @@ import bpy  # noqa: E402
 N = 5                   # -N ... +N
 P = 15.0                # delik araligi (bir birim)
 G = N * P               # izgaranin yari genisligi
-T = 5.0                 # tahta kalinligi (pim bu kadar derine girer)
-HOLE_D = 5.0            # pim deligi capi (pim_deneme ile secilir)
-CS_DEPTH = 0.6          # deligin ustundeki 45 derecelik havsa: pimin ucu delige kayar
-TEST_DS = (4.8, 4.9, 5.0, 5.1, 5.2)
 NUM_H = 4.6             # buyuk punto rakam yuksekligi (~18 punto, sayi dogrusuyla ayni)
 
-# Pim (kullanim konumunda; z = 0 tahtanin ustu, govde asagi gider)
-SHANK_D = 4.8           # delige giren govde
-SHANK_L = T - 0.6       # govde tahtanin altina ulasmaz (ilk katmanlardaki daralmaya degmez)
-SHANK_TIP = 0.5         # govde ucundaki pah
-FLANGE_D, FLANGE_T = 8.0, 0.8   # tahtaya oturan flans
-POST_D = 6.0            # lastigin takildigi boyun
-POST_Z0 = FLANGE_T + (FLANGE_D - POST_D) / 2   # flans konisinin ustu (45 derece: ters basilinca)
-POST_Z1 = POST_Z0 + 7.0                         # boyun boyu 7 mm: uc-dort lastik ust uste
-HEAD_T = 2.5
-HEAD_TOP = POST_Z1 + HEAD_T
-HEAD_D = 10.0           # yuvarlak bas
-HEAD_SQ, HEAD_RC = 9.0, 1.5     # kare bas (kenar, kose yaricapi)
-HEAD_CH = 0.6           # basin ust kenarindaki pah
-
-# Tahta yerlesimi
-CS_R = HOLE_D / 2 + CS_DEPTH
-CLR = max(CS_R + MARGIN, FLANGE_D / 2 + 0.4)   # delik merkezinden kabartmalara en az uzaklik
+# Tahta yerlesimi (pim ve delik olculeri ortak/pim.py'de; CLR delik merkezinden kabartmalara
+# en az uzaklik)
 A = CLR + BAR[0] + 0.05                         # eksen cizgisinin delik merkezine yakin ucu
 ARROW_L, ARROW_W = 7.0, 3.5                     # eksen oku (boy, yari genislik)
 ARROW_BASE = G + A + 4.5
@@ -102,9 +86,8 @@ def make_board():
     outer = rounded([v2(x_min, y_min), v2(edge, y_min), v2(edge, edge), v2(x_min, edge)], 4.0)
 
     centers = [v2(P * i, P * j) for i in range(-N, N + 1) for j in range(-N, N + 1)]
-    keep = [circle(c, CLR - MARGIN, 32) for c in centers]
-    pc = Piece('koordinat_tahtasi', outer, thickness=T, keepout=keep)
-    pc.mesh_cut.append(countersunk_holes(centers, HOLE_D, CS_DEPTH, T))
+    pc = Piece('koordinat_tahtasi', outer, thickness=T, keepout=hole_keepout(centers))
+    pc.mesh_cut.append(pin_holes(centers))
 
     # Eksenler: delikler arasinda cizgi, arti ucta ok
     arrows = []
@@ -134,90 +117,9 @@ def make_board():
     return pc
 
 
-def make_test(pitch=16.0, x0=10.0):
-    L = 2 * x0 + pitch * (len(TEST_DS) - 1)
-    outer = rounded([v2(0, -10.5), v2(L, -10.5), v2(L, 9.5), v2(0, 9.5)], 3.0)
-    centers = [v2(x0 + pitch * i, 0) for i in range(len(TEST_DS))]
-    keep = [circle(c, d / 2 + CS_DEPTH, 32) for c, d in zip(centers, TEST_DS)]
-    pc = Piece('pim_deneme', outer, thickness=T, keepout=keep)
-    for c, d in zip(centers, TEST_DS):
-        pc.mesh_cut.append(countersunk_holes([c], d, CS_DEPTH, T))
-    r_max = max(TEST_DS) / 2 + CS_DEPTH
-    y_dot = r_max + MARGIN + DOT_S[0] + 0.3
-    y_num = -(r_max + MARGIN + NUM_H / 2 + 0.3)
-    for i, (c, d) in enumerate(zip(centers, TEST_DS)):
-        n = i + 1
-        for j in range(n):
-            pc.add(c + v2((j - (n - 1) / 2) * 2.8, y_dot), None, DOT_S, '%.1f nokta %d' % (d, j))
-        pc.add_text(('%.1f' % d).replace('.', ','), c + v2(0, y_num), v2(0, 1), NUM_H, '%.1f yazi' % d)
-    return pc
-
-
 # ---------------------------------------------------------------------------
-# Pim
+# Onizleme
 # ---------------------------------------------------------------------------
-def rsquare(h, rc, n=8):
-    """Merkezli, yari kenari h, kose yaricapi rc olan kare (CCW, 4 * (n + 1) nokta)."""
-    pts = []
-    for k, (sx, sy) in enumerate(((1, 1), (-1, 1), (-1, -1), (1, -1))):
-        c = v2(sx * (h - rc), sy * (h - rc))
-        for i in range(n + 1):
-            t = math.radians(90 * k + 90 * i / n)
-            pts.append(c + v2(math.cos(t), math.sin(t)) * rc)
-    return pts
-
-
-def make_pin(name, kind):
-    rs = SHANK_D / 2
-    body = [(rs - SHANK_TIP, -SHANK_L), (rs, -SHANK_L + SHANK_TIP), (rs, 0.0),
-            (FLANGE_D / 2, 0.0), (FLANGE_D / 2, FLANGE_T), (POST_D / 2, POST_Z0),
-            (POST_D / 2, POST_Z1 + 1.0)]
-    base = mesh_of(name, lambda bm: add_loft(
-        bm, [[(p.x, p.y, z) for p in circle(v2(0, 0), r, 64)] for r, z in body]))
-    if kind == 'yuvarlak':
-        def shape(d):
-            return circle(v2(0, 0), HEAD_D / 2 - d, 64)
-    else:
-        def shape(d):
-            return rsquare(HEAD_SQ / 2 - d, HEAD_RC - d)
-    head = [(0.0, POST_Z1), (0.0, HEAD_TOP - HEAD_CH), (HEAD_CH, HEAD_TOP)]
-    ops = [('UNION', mesh_of(name + '_bas', lambda bm: add_loft(
-        bm, [[(p.x, p.y, z) for p in shape(d)] for d, z in head])))]
-    obj, _, _ = boolean_solid(name, base, ops)
-    return obj
-
-
-# ---------------------------------------------------------------------------
-# Yardimcilar
-# ---------------------------------------------------------------------------
-def transformed(src, name, fn):
-    """src'nin kopyasi; her koseye fn(x, y, z) -> (x, y, z) uygulanir."""
-    bm = bmesh.new()
-    bm.from_mesh(src.data)
-    for v in bm.verts:
-        v.co = fn(*v.co)
-    me = bpy.data.meshes.new(name)
-    bm.to_mesh(me)
-    bm.free()
-    obj = bpy.data.objects.new(name, me)
-    bpy.context.scene.collection.objects.link(obj)
-    return obj
-
-
-def intersect_volume(a, b):
-    tmp = transformed(a, '_kesisim', lambda x, y, z: (x, y, z))
-    mod = tmp.modifiers.new('k', 'BOOLEAN')
-    mod.operation, mod.object, mod.solver = 'INTERSECT', b, 'EXACT'
-    me = bpy.data.meshes.new_from_object(tmp.evaluated_get(bpy.context.evaluated_depsgraph_get()))
-    bm = bmesh.new()
-    bm.from_mesh(me)
-    vol = bm.calc_volume()
-    bm.free()
-    bpy.data.objects.remove(tmp)
-    bpy.data.meshes.remove(me)
-    return vol
-
-
 def band(name, pins, z):
     """Onizleme icin: pinlerin boyunlarina gecirilmis lastik."""
     hull = convex_hull([p for c in pins for p in circle(c, POST_D / 2 + 0.5, 24)])
@@ -239,7 +141,7 @@ def main():
 
     reset_scene()
     objs = {}
-    for pc in (make_board(), make_test()):
+    for pc in (make_board(), make_pin_test(NUM_H)):
         obj, _, _ = build_object(pc)
         report(pc.name, obj, 'kabartma=%d yazi=%d' % (len(pc.bumps), len(pc.texts)))
         for s in pc.skipped:
@@ -256,19 +158,13 @@ def main():
     for kind in ('yuvarlak', 'kare'):
         name = 'pim_' + kind
         use = make_pin(name + '_kullanim', kind)
-        printed = transformed(use, name, lambda x, y, z: (x, -y, HEAD_TOP - z))
+        printed = printed_pin(use, name, kind)
         report(name, printed)
         export_stl(printed, os.path.join(stl_dir, name + '.stl'))
         printed.hide_render = True
         pins[kind] = (use, printed)
         # Eksen uzerindeki, kosedeki ve etiket yanindaki deliklerde pim tahtaya carpmamali
-        for i, j in ((3, 0), (0, -5), (-5, -5), (5, 5)):
-            probe = transformed(use, '_deneme', lambda x, y, z, i=i, j=j: (P * i + x, P * j + y, T + z + 0.01))
-            vol = intersect_volume(probe, board)
-            print('  %s (%d, %d) deliginde tahtayla kesisim = %.3f mm3' % (name, i, j, vol))
-            m = probe.data
-            bpy.data.objects.remove(probe)
-            bpy.data.meshes.remove(m)
+        check_pin_fit(use, board, [(P * i, P * j) for i, j in ((3, 0), (0, -5), (-5, -5), (5, 5))], name)
 
     # Onizleme: bir ucgen (yuvarlak pimler ve lastik) ve iki nokta (kare pimler)
     shown = [board]

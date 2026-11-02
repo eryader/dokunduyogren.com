@@ -127,6 +127,15 @@ SETS = [
         dict(name='2 - Koordinat tahtası', tower=(200, 212), items=[
             item('koordinat-tahtasi/stl/koordinat_tahtasi.stl', 'Koordinat tahtası', 5.0, at=(30, 6))]),
     ]),
+    # Isaret pimleri ve pim deneme parcasi tek renk (kirmizi); plakada renk degisimi yok. Pim
+    # deneme parcasi koordinat tahtasininkiyle ayni (delikler ayni); orada basildiysa silinebilir.
+    ('yuzluk_tablo_x2d', 'Yüzlük tablo', [BEYAZ, SIYAH, KIRMIZI], [
+        dict(name='1 - Pim deneme ve işaret pimleri', items=[
+            item('koordinat-tahtasi/stl/pim_deneme.stl', 'Pim deneme', fil=3, at=(30, 20))]
+            + pin_grid('yuzluk-tablo/stl/isaret_pimi.stl', 'İşaret pimi', 3, 30, 60, cols=10, rows=5, step=13)),
+        dict(name='2 - Yüzlük tablo', tower=(195, 216), items=[
+            item('yuzluk-tablo/stl/yuzluk_tablo.stl', 'Yüzlük tablo', 5.0, at=(26, 4))]),
+    ]),
 ]
 
 
@@ -225,18 +234,26 @@ def prepare(it, out_base):
     z = it['h'] + SPLIT_UP
     vols = []
     for suffix, z0, z1 in (('zemin', -1.0, z), ('kabartma', z, 1000.0)):
-        ob = whole.copy()
-        ob.data = whole.data.copy()
-        bpy.context.scene.collection.objects.link(ob)
-        cut = slab(z0, z1)
-        mod = ob.modifiers.new('kes', 'BOOLEAN')
-        mod.operation, mod.solver, mod.object = 'INTERSECT', 'EXACT', cut
-        bpy.context.view_layer.objects.active = ob
-        bpy.ops.object.modifier_apply(modifier=mod.name)
-        bpy.data.objects.remove(cut)
-        open_edges, vol = mesh_stats(ob)
-        if open_edges or vol <= 0:
-            raise SystemExit('%s %s: acik kenar=%d hacim=%.1f' % (src, suffix, open_edges, vol))
+        # EXACT cok noktali tahtada (yuzluk tablo) ust yuzde acik kenar birakiyor; o zaman MANIFOLD
+        for solver in ('EXACT', 'MANIFOLD'):
+            ob = whole.copy()
+            ob.data = whole.data.copy()
+            bpy.context.scene.collection.objects.link(ob)
+            cut = slab(z0, z1)
+            mod = ob.modifiers.new('kes', 'BOOLEAN')
+            mod.operation, mod.solver, mod.object = 'INTERSECT', solver, cut
+            bpy.context.view_layer.objects.active = ob
+            bpy.ops.object.modifier_apply(modifier=mod.name)
+            bpy.data.objects.remove(cut)
+            open_edges, vol = mesh_stats(ob)
+            if open_edges == 0 and vol > 0:
+                break
+            print('  %s %s: %s ile acik kenar=%d hacim=%.1f' % (it['rel'], suffix, solver, open_edges, vol))
+            m = ob.data
+            bpy.data.objects.remove(ob)
+            bpy.data.meshes.remove(m)
+        else:
+            raise SystemExit('%s %s: bolunemedi' % (src, suffix))
         export_selected(ob, '%s_%s.stl' % (out_base, suffix))
         vols.append(vol)
     if abs(sum(vols) - vol0) > 0.002 * vol0:

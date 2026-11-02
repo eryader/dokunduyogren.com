@@ -267,15 +267,18 @@ def _load_font():
     return _font
 
 
-def text_shape(text, height):
-    """Yazinin agini olustur: xy merkezli, sinir kutusu yuksekligi = height, z 0..1."""
-    key = (text, height)
+def text_shape(text, height, res=None):
+    """Yazinin agini olustur: xy merkezli, sinir kutusu yuksekligi = height, z 0..1.
+    res: egri cozunurlugu (Blender varsayilani 12); cok yazili parcada STL'yi kucultur."""
+    key = (text, height, res)
     if key in _text_cache:
         return _text_cache[key]
     cu = bpy.data.curves.new('yazi', 'FONT')
     cu.body = text
     cu.font = _load_font()
     cu.size = 1.0
+    if res:
+        cu.resolution_u = res
     cu.extrude = 0.5
     ob = bpy.data.objects.new('yazi', cu)
     bpy.context.scene.collection.objects.link(ob)
@@ -322,6 +325,10 @@ class Piece:
         self.mesh_cut = []       # oyulan govdeler
         self.mesh_cut_last = []  # eklemelerden SONRA oyulanlar (ray ustundeki oluklar gibi)
         self.skipped = []
+        # Cok kabartmali parcada STL'yi kucultmek icin: nokta cevresindeki kose sayisi ve yazi
+        # egrisi cozunurlugu (bkz. text_shape)
+        self.bump_n = 24
+        self.text_res = None
 
     def _free(self, p, clearance):
         if not inside(p, self.outer):
@@ -370,7 +377,7 @@ class Piece:
 
     def add_text(self, text, center, up, height, label):
         """Buyuk punto kabartma yazi; up yazinin yukari yonu, okuma yonu up'in sagi."""
-        shape = text_shape(text, height)
+        shape = text_shape(text, height, self.text_res)
         up = up.normalized()
         U = v2(up.y, -up.x)
         w, h = shape['w'], shape['h']
@@ -529,7 +536,7 @@ def tool_mesh(pc):
     def fill(bm):
         top = pc.thickness
         for p0, p1, r, h in pc.bumps:
-            add_bump(bm, p0, p1, r, h, top)
+            add_bump(bm, p0, p1, r, h, top, n=pc.bump_n)
         for shape, center, U, up in pc.texts:
             add_text_mesh(bm, shape, center, U, up, top)
     return mesh_of(pc.name + '_ekle', fill)
