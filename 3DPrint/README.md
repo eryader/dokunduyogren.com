@@ -14,6 +14,7 @@ Blender'da Python betikleriyle parametrik olarak üretilir. Web sayfası: [`inde
 | [`daire-cetveli/`](daire-cetveli/) | Daire çizim cetveli (pergel yerine) ve delik deneme parçası |
 | [`koordinat-tahtasi/`](koordinat-tahtasi/) | Koordinat ve geometri tahtası, yuvarlak ve kare başlı pimler, pim deneme parçası |
 | [`yuzluk-tablo/`](yuzluk-tablo/) | 1–100 yüzlük tablo ve işaret pimi (koordinat tahtasıyla aynı delikler) |
+| [`sutun-grafik/`](sutun-grafik/) | İkili sütun grafik tahtası ve kare işaret pimi (aynı delikler) |
 | [`bambu-x2d/`](bambu-x2d/) | Bambu Lab X2D için hazır Bambu Studio projeleri (.3mf) ve onları üreten betik |
 | [`ruler-01/`](ruler-01/) | İlk 10 cm dokunsal cetvel (STL ve G-code) |
 | [`onizleme/`](onizleme/) | Web sayfasındaki görseller ([`onizleme_uret.py`](onizleme_uret.py) üretir) |
@@ -49,15 +50,15 @@ proje adını ekleyin (`-- geometri_seti_x2d`); diğer 3MF dosyaları değişmez
   Bütün araçlarda aynı kalır.
 - **Çift format:** Braille'in yanında az gören öğrenciler için büyük punto (en az ~18 punto).
 - **Kontrast:** Kabartmalar zeminden ayrı renkte basılır. Duraklatma yükseklikleri: geometri seti,
-  daire çizim cetveli ve sayı doğrusu 3,0 mm, kesir parçaları 4,0 mm, koordinat tahtası ve yüzlük tablo
-  5,0 mm, tabak 5,4 mm.
+  daire çizim cetveli ve sayı doğrusu 3,0 mm, kesir parçaları 4,0 mm, koordinat tahtası, yüzlük tablo
+  ve sütun grafik tahtası 5,0 mm, tabak 5,4 mm.
 - **Boyut:** Her parça 220 × 220 mm tablaya (Ender 3 S1) sığar. Küçük çocuklarda yutma riskine
   karşı parçaların 30 mm'nin altına inmemesi hedeflenir. İstisnalar 24 mm'lik kaydırıcılar,
-  10 mm'lik pimler ve 8 mm'lik işaret pimleri; küçük yaşta gözetimle kullanılmalı (web sayfasında
+  10 mm'lik pimler ve 7–8 mm'lik işaret pimleri; küçük yaşta gözetimle kullanılmalı (web sayfasında
   pimler için uyarı var).
-- **Pimli tahtalar:** koordinat tahtası ve yüzlük tablo aynı deliği ve pimi kullanır
-  ([`ortak/pim.py`](ortak/pim.py)). Delik ölçüsü (`HOLE_D`) orada değişir; sonra iki tahtanın
-  betiği ve X2D projeleri yeniden çalıştırılır.
+- **Pimli tahtalar:** koordinat tahtası, yüzlük tablo ve sütun grafik tahtası aynı deliği ve pimi
+  kullanır ([`ortak/pim.py`](ortak/pim.py)). Delik ölçüsü (`HOLE_D`) orada değişir; sonra üç
+  tahtanın betiği ve X2D projeleri yeniden çalıştırılır.
 
 ## Yapılacaklar
 
@@ -67,8 +68,8 @@ Bir maddeyi bitirince `[ ]` işaretini `[x]` yapın.
 
 1. Geometri setine büyük punto rakamlar (daire çizim cetvelindeki gibi)
 2. SVG'den kabartma plaka aracı (katmanlı bir örnek SVG gerekiyor)
-3. Pimli tahta ailesinin devamı: sütun grafik tahtası (yuvarlak ve kare pimlerle ikili grafik)
-4. Kesir çubukları ve onluk taban blokları
+3. Kesir çubukları ve onluk taban blokları
+4. Pimli tahta ailesinin devamı: çarpım tablosu tahtası ya da büyük Braille öğretim hücresi
 
 ### Deneme ve onay
 
@@ -85,6 +86,9 @@ Bir maddeyi bitirince `[ ]` işaretini `[x]` yapın.
 - [ ] Yüzlük tablo denemesi: işaret piminin parmakla çekilip çıkması (baş 5 mm yüksekliğinde);
       takılı pimlerin yan hücrenin Braille'ini okumayı engelleyip engellemediği; 20 mm hücrede
       Braille sayılarının ayırıcı çizgilerle karışmadan okunması
+- [ ] Sütun grafik tahtası denemesi: kare (6,8 mm) ve yuvarlak (8 mm) işaret piminin dokunarak
+      ayırt edilmesi; sütunlar arasındaki değer çizgilerinin parmakla izlenmesi; etiket alanlarına
+      Braille bandının sığması
 - [ ] Bambu Lab X2D projelerini Bambu Studio arayüzünde açıp birer plaka basmak (komut satırında
       dilimlenip denetlendi, arayüzde ve yazıcıda denenmedi)
 - [ ] Bir öğretmen ve birkaç öğrenciyle sınıf denemesi, geri bildirimlerin buraya işlenmesi
@@ -103,6 +107,8 @@ Bir maddeyi bitirince `[ ]` işaretini `[x]` yapın.
 - [x] Daire çizim cetveli (pergel yerine): merkez deliği, 1–10 cm arası her 0,5 cm'de kalem deliği
 - [x] Koordinat ve geometri tahtası: 11 × 11 delik, kabartma eksenler, yuvarlak ve kare başlı pimler, lastik
 - [x] Yüzlük tablo: 1–100, her hücrede Braille, büyük punto ve pim deliği; işaret pimi
+- [x] Sütun grafik tahtası: 6 kategori × 2 sütun, 0–10 değer, değer çizgileri, etiket alanları;
+      yuvarlak ve kare işaret pimiyle ikili sütun grafiği
 - [ ] Geometrik cisimler: küp, prizma, piramit, silindir, koni, küre
 - [ ] Dokunsal saat: sürtünmeli akrep ve yelkovan
 - [ ] Döner kollu açı modeli: 30°, 45°, 60° ve 90°'de tık diye oturur
@@ -124,11 +130,11 @@ Bir maddeyi bitirince `[ ]` işaretini `[x]` yapın.
 ### Altyapı
 
 - [x] Bambu Lab X2D için hazır projeler: geometri seti, kesir seti, sayı doğrusu, koordinat tahtası,
-      yüzlük tablo (iki renk, duraklatmasız)
+      yüzlük tablo, sütun grafik tahtası (iki renk, duraklatmasız)
 - [ ] SVG'den kabartma plaka aracı: `çizgi`, `doku-1`, `doku-2`, `etiket` katmanları; etiketler
       kendiliğinden Braille ve büyük puntoya çevrilir
-- [x] Kütüphaneye pim ve delik geçmesi (`ortak/pim.py`: havşalı delik, yuvarlak, kare ve işaret pimi,
-      pim deneme parçası)
+- [x] Kütüphaneye pim ve delik geçmesi (`ortak/pim.py`: havşalı delik, yuvarlak, kare, yuvarlak ve
+      kare işaret pimi, pim deneme parçası)
 - [ ] Kütüphaneye döner eksen (menteşe)
 - [ ] MEB kazanımlarına göre konu eşlemesi: hangi konu dokunarak öğretilmeli
 
@@ -140,7 +146,6 @@ Matematik ve geometri:
 - [ ] Örüntü blokları (altıgen, yamuk, eşkenar dörtgen, üçgen)
 - [ ] Tangram ve tepside şekil siluetleri
 - [ ] Pisagor yapbozu, daire alanı yapbozu
-- [ ] Sütun grafik tahtası
 - [ ] Çarpım tablosu tahtası (yüzlük tablonun düzeniyle)
 - [ ] Kabartma plakalar: açı türleri, üçgen ve dörtgen çeşitleri, çemberin elemanları
 - [ ] Fonksiyon grafikleri ve simetri kartları

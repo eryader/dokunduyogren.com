@@ -7,14 +7,16 @@ Calistirma:
 
 Cikti: onizleme/<stl_adi>.jpg (1200x800). Yalnizca bazilarini uretmek icin adlarini verin:
   ... --python onizleme_uret.py -- daire_cetveli
-onizleme/kaydirici.jpg, onizleme/pimler.jpg ve onizleme/isaret_pimi.jpg bu betikle degil, uretec
-onizlemelerinden uretilir:
+onizleme/kaydirici.jpg, onizleme/pimler.jpg, onizleme/isaret_pimi.jpg ve onizleme/kare_isaret_pimi.jpg
+bu betikle degil, uretec onizlemelerinden uretilir:
   sips -s format jpeg -s formatOptions 85 -z 800 1200 sayi-dogrusu/onizleme_detay.png \
       --out onizleme/kaydirici.jpg
   sips -s format jpeg -s formatOptions 85 -z 800 1200 koordinat-tahtasi/onizleme_pim.png \
       --out onizleme/pimler.jpg
   sips -s format jpeg -s formatOptions 85 -z 800 1200 yuzluk-tablo/onizleme_detay.png \
       --out onizleme/isaret_pimi.jpg
+  sips -s format jpeg -s formatOptions 85 -z 800 1200 sutun-grafik/onizleme_detay.png \
+      --out onizleme/kare_isaret_pimi.jpg
 Gorunum geometri-seti/generate_set.py'deki render() ile ayni (workbench, turuncu parca).
 """
 import bpy
@@ -39,6 +41,7 @@ STLS = [
     ('daire-cetveli/stl/daire_cetveli.stl', None),
     ('koordinat-tahtasi/stl/koordinat_tahtasi.stl', None),
     ('yuzluk-tablo/stl/yuzluk_tablo.stl', None),
+    ('sutun-grafik/stl/sutun_grafik.stl', None),
 ]
 RES = (1200, 800)
 TILT = 28.0

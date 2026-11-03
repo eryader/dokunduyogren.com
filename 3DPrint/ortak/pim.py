@@ -1,5 +1,5 @@
 """
-Pimli tahtalar (koordinat tahtasi, yuzluk tablo) icin ortak pim ve delik.
+Pimli tahtalar (koordinat tahtasi, yuzluk tablo, sutun grafik tahtasi) icin ortak pim ve delik.
 
 Butun pimli tahtalarin delikleri ayni oldugu icin her pim her tahtaya uyar. Pim deneme
 parcasiyla secilen delik capi burada (HOLE_D) degistirilir; sonra pimli tahtalarin betikleri
@@ -9,6 +9,9 @@ Pim turleri (kullanim konumunda z = 0 tahtanin ustu, govde asagi gider):
   yuvarlak, kare : flans, 7 mm boyun ve bas. Boyna lastik takilir (geometri tahtasi).
   isaret         : tahtaya oturan alcak, yuvarlak bas. Lastik takilmaz; sayi ya da nokta
                    isaretler. Basi flans kadar genis oldugu icin tahtadaki kabartmalara degmez.
+  isaret_kare    : isaret pimiyle ayni boyda, kare basli (ikinci veri dizisi icin). Pim delikte
+                   doner; kosesi hangi yone gelirse gelsin kabartmalara ve 10 mm yanindaki
+                   pime degmez (kose yaricapi MARK_SQ_R < CLR).
 Hepsi basi tablaya gelecek sekilde ters basilir; destek gerekmez (bkz. printed_pin).
 """
 import math
@@ -36,9 +39,12 @@ HEAD_D = 10.0           # yuvarlak bas
 HEAD_SQ, HEAD_RC = 9.0, 1.5     # kare bas (kenar, kose yaricapi)
 HEAD_CH = 0.6           # basin ust kenarindaki pah
 MARK_D, MARK_H = FLANGE_D, 5.0  # isaret pimi basi (cap, yukseklik; 5 mm parmakla tutulup cekilir)
+MARK_SQ, MARK_RC = 6.8, 1.2     # kare isaret pimi basi (kenar, kose yaricapi)
+MARK_SQ_R = (MARK_SQ / 2 - MARK_RC) * math.sqrt(2) + MARK_RC   # merkezden koseye (4,31)
 
 CS_R = HOLE_D / 2 + CS_DEPTH
 CLR = max(CS_R + MARGIN, FLANGE_D / 2 + 0.4)   # delik merkezinden kabartmalara en az uzaklik
+assert MARK_SQ_R < CLR, 'kare isaret piminin kosesi kabartmalara degebilir'
 
 
 def hole_keepout(centers):
@@ -52,7 +58,7 @@ def pin_holes(centers, top=BOARD_T):
 
 
 def pin_top(kind):
-    return MARK_H if kind == 'isaret' else HEAD_TOP
+    return MARK_H if kind.startswith('isaret') else HEAD_TOP
 
 
 def rsquare(h, rc, n=8):
@@ -67,7 +73,7 @@ def rsquare(h, rc, n=8):
 
 
 def make_pin(name, kind):
-    """Kullanim konumunda pim nesnesi; kind: 'yuvarlak', 'kare' ya da 'isaret'."""
+    """Kullanim konumunda pim nesnesi; kind: 'yuvarlak', 'kare', 'isaret' ya da 'isaret_kare'."""
     rs = SHANK_D / 2
     shank = [(rs - SHANK_TIP, -SHANK_L), (rs, -SHANK_L + SHANK_TIP), (rs, 0.0)]
 
@@ -79,6 +85,13 @@ def make_pin(name, kind):
         body = shank + [(rm, 0.0), (rm, MARK_H - HEAD_CH), (rm - HEAD_CH, MARK_H)]
         obj = bpy.data.objects.new(name, mesh_of(name, solid(body)))
         bpy.context.scene.collection.objects.link(obj)
+        return obj
+    if kind == 'isaret_kare':
+        stem = mesh_of(name, solid(shank + [(rs, 1.0)]))
+        head = [(0.0, 0.0), (0.0, MARK_H - HEAD_CH), (HEAD_CH, MARK_H)]
+        ops = [('UNION', mesh_of(name + '_bas', lambda bm: add_loft(
+            bm, [[(p.x, p.y, z) for p in rsquare(MARK_SQ / 2 - d, MARK_RC - d)] for d, z in head])))]
+        obj, _, _ = boolean_solid(name, stem, ops)
         return obj
     body = shank + [(FLANGE_D / 2, 0.0), (FLANGE_D / 2, FLANGE_T), (POST_D / 2, POST_Z0),
                     (POST_D / 2, POST_Z1 + 1.0)]

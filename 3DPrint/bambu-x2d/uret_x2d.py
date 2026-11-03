@@ -136,6 +136,20 @@ SETS = [
         dict(name='2 - Yüzlük tablo', tower=(195, 216), items=[
             item('yuzluk-tablo/stl/yuzluk_tablo.stl', 'Yüzlük tablo', 5.0, at=(26, 4))]),
     ]),
+    # Yuvarlak (kirmizi) ve kare (mavi) isaret pimleri ayri plakalarda: ayni plakada her katmanda
+    # nozul degisiyor, sure iki katina cikiyordu. 1. plaka yuzluk tablonunkiyle ayni pimler; o
+    # projede basildiysa atlanabilir.
+    ('sutun_grafik_x2d', 'Sütun grafik tahtası', [BEYAZ, SIYAH, KIRMIZI, MAVI], [
+        dict(name='1 - Pim deneme ve yuvarlak işaret pimleri', items=[
+            item('koordinat-tahtasi/stl/pim_deneme.stl', 'Pim deneme', fil=3, at=(30, 20))]
+            + pin_grid('yuzluk-tablo/stl/isaret_pimi.stl', 'İşaret pimi (yuvarlak)', 3, 30, 60,
+                       cols=10, rows=4, step=13)),
+        dict(name='2 - Kare işaret pimleri', items=
+             pin_grid('sutun-grafik/stl/kare_isaret_pimi.stl', 'İşaret pimi (kare)', 4, 30, 60,
+                      cols=10, rows=4, step=13)),
+        dict(name='3 - Sütun grafik tahtası', tower=(200, 200), items=[
+            item('sutun-grafik/stl/sutun_grafik.stl', 'Sütun grafik tahtası', 5.0, at=(26, 20))]),
+    ]),
 ]
 
 

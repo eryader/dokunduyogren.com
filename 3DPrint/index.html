@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Dokun Duy Öğren - 3D Baskı Araçları</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Görme engelli ve az gören öğrenciler için 3D yazıcıyla basılabilen dokunsal cetvel, gönye, iletki, daire çizim cetveli, kesir seti, sayı doğrusu, koordinat tahtası ve yüzlük tablo modelleri.">
+  <meta name="description" content="Görme engelli ve az gören öğrenciler için 3D yazıcıyla basılabilen dokunsal cetvel, gönye, iletki, daire çizim cetveli, kesir seti, sayı doğrusu, koordinat tahtası, yüzlük tablo ve sütun grafik tahtası modelleri.">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 
@@ -14,7 +14,7 @@
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">3D Baskı Dokunsal Ders Araçları</h1>
-        <p class="lead text-muted">Görme engelli ve az gören öğrencilerin ölçüm ve çizim yapabilmesi, kesirleri, tam sayıları, koordinat düzlemini ve 100'e kadar sayıları dokunarak öğrenebilmesi için hazırladığımız cetvel, gönye, iletki, daire çizim cetveli, kesir seti, sayı doğrusu, koordinat tahtası ve yüzlük tablo modelleri. STL dosyalarını indirip 3D yazıcıda ücretsiz olarak basabilirsiniz.</p>
+        <p class="lead text-muted">Görme engelli ve az gören öğrencilerin ölçüm ve çizim yapabilmesi, kesirleri, tam sayıları, koordinat düzlemini, 100'e kadar sayıları ve sütun grafiklerini dokunarak öğrenebilmesi için hazırladığımız cetvel, gönye, iletki, daire çizim cetveli, kesir seti, sayı doğrusu, koordinat tahtası, yüzlük tablo ve sütun grafik tahtası modelleri. STL dosyalarını indirip 3D yazıcıda ücretsiz olarak basabilirsiniz.</p>
         <p>
           <a href="https://dokunduyogren.com" class="btn btn-warning my-2">Dokun Duy Öğren</a>
           <a href="https://eryader.org" class="btn btn-primary my-2" target="_blank">ERYADER</a>
@@ -377,23 +377,85 @@
     </div>
   </div>
 
+  <div class="container mt-5">
+    <h2 class="h4">Sütun Grafik Tahtası</h2>
+    <p>Pimlerle sütun grafiği kurulan delikli tahta. Altı kategori vardır ve her kategoride yan yana iki sütun delik bulunur. Tek veri dizisi için bir sütunu, iki diziyi karşılaştırmak (ikili sütun grafiği) için ikisini kullanın. Değerler 0'dan 10'a gider, delikler arası 10 mm'dir.</p>
+    <ul>
+      <li><strong>Sütunlar:</strong> öğrenci sütunun deliklerine alttan yukarı sırayla işaret pimi takar; pimler bir sütun oluşturur. Değer pim sayısıdır; en üstteki pim de o değerin hizasındadır.</li>
+      <li><strong>Değerler:</strong> solda her değerde Braille ve büyük punto rakam vardır. Kategoriler arasındaki boşluklarda her değerin hizasında kısa bir kabartma çizgi bulunur. Parmak sütunun en üstündeki pimden sola kayarak değere ulaşır.</li>
+      <li><strong>Etiket alanları:</strong> altta her kategori için, üstte başlık ve iki açıklama için çerçeveli boş alanlar vardır. Kategori adlarını ve başlığı Braille etiket bandıyla ya da büyük punto yazılı etiketle yapıştırın; 12 mm'lik bant sığar. Açıklama alanındaki deliğe dizinin pimini takıp yanına dizinin adını yapıştırın, örneğin yuvarlak pimin yanına "kızlar".</li>
+      <li><strong>Pimler:</strong> birinci dizi yuvarlak, ikinci dizi kare başlı işaret pimiyle gösterilir; iki türü farklı renkte basın. Yuvarlak işaret pimi yüzlük tablonunkiyle aynıdır. Kare pim delikte dönse de yanındaki pime ve tahtadaki kabartmalara değmez. Koordinat tahtasının uzun pimlerinin başı 10 mm olduğu için yan yana deliklere sığmaz.</li>
+      <li><strong>Dikkat:</strong> işaret pimleri 7–8 mm'lik küçük parçalardır. Küçük çocuklarda yutma tehlikesine karşı gözetimle kullanın.</li>
+    </ul>
+    <p class="mb-1">Derste kullanım örnekleri:</p>
+    <ul>
+      <li><strong>Tablodan grafiğe:</strong> sınıfta en sevilen meyveleri sayıp sıklık tablosuna yazın. Her meyvenin sütununa sayısı kadar pim takın.</li>
+      <li><strong>Grafik okuma:</strong> en uzun ve en kısa sütunu bulun. İki değer arasındaki farkı pimleri sayarak ya da üstteki pimlerden sola kayıp değerleri okuyarak hesaplayın.</li>
+      <li><strong>İkili sütun grafiği:</strong> kızların ve erkeklerin tercihlerini yuvarlak ve kare pimlerle yan yana gösterin. Her kategoride hangi grubun daha fazla olduğunu dokunarak karşılaştırın.</li>
+      <li><strong>Ölçek:</strong> değerler 10'u aşıyorsa bir pimin 2 ya da 5 kişiyi gösterdiğini kararlaştırın. Okurken pim sayısını ölçekle çarpın.</li>
+    </ul>
+  </div>
+
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      <div class="col">
+        <div class="card shadow-sm h-100">
+          <img class="img-fluid" src="onizleme/sutun_grafik.jpg" alt="Altı kategoride yan yana ikişer sütun delik, solda 0'dan 10'a Braille ve büyük punto değerler, altta ve üstte çerçeveli etiket alanları bulunan dokunsal sütun grafik tahtasının 3D modeli">
+          <div class="card-body d-flex flex-column">
+            <h3 class="h5 card-title">Sütun Grafik Tahtası</h3>
+            <p class="card-text">6 kategori, her birinde 2 sütun; değerler 0–10, delikler arası 10 mm. Solda Braille ve büyük punto değerler, kategoriler arasında değer çizgileri, çerçeveli etiket alanları.</p>
+            <div class="mt-auto d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <a class="btn btn-sm btn-outline-secondary" href="sutun-grafik/stl/sutun_grafik.stl" download>STL İndir</a>
+                <a class="btn btn-sm btn-outline-secondary" href="sutun-grafik/onizleme.png" target="_blank">Pimlerle</a>
+                <a class="btn btn-sm btn-outline-secondary" href="sutun-grafik/onizleme_detay.png" target="_blank">Yakından</a>
+              </div>
+              <small class="text-muted">206 × 150 × 6 mm</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card shadow-sm h-100">
+          <img class="img-fluid" src="onizleme/kare_isaret_pimi.jpg" alt="Sütun grafik tahtasının yakından görünüşü: kırmızı yuvarlak ve mavi kare işaret pimlerinden sütunlar, solda Braille ve büyük punto değerler">
+          <div class="card-body d-flex flex-column">
+            <h3 class="h5 card-title">Kare İşaret Pimi</h3>
+            <p class="card-text">İkili sütun grafiğinde ikinci dizi için kare başlı işaret pimi; birinci dizi yüzlük tablonun yuvarlak işaret pimiyle gösterilir. Ters basılır, destek gerekmez. Bir grafik için her türden 30–40 pim gerekebilir.</p>
+            <div class="d-flex flex-wrap gap-1 mb-3">
+              <a class="btn btn-sm btn-outline-secondary" href="sutun-grafik/stl/kare_isaret_pimi.stl" download aria-label="Kare işaret piminin STL dosyasını indir">Kare Başlı</a>
+              <a class="btn btn-sm btn-outline-secondary" href="yuzluk-tablo/stl/isaret_pimi.stl" download aria-label="Yuvarlak işaret piminin STL dosyasını indir">Yuvarlak Başlı</a>
+            </div>
+            <div class="mt-auto d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <a class="btn btn-sm btn-outline-secondary" href="sutun-grafik/onizleme_pim.png" target="_blank">Baskı Yönü</a>
+              </div>
+              <small class="text-muted">7 × 7 × 9 mm</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="container my-5">
     <h2 class="h4">Baskı ve Kaynak Dosyalar</h2>
     <p>Bütün parçalar 220 × 220 mm tablaya (Creality Ender 3 S1) sığacak şekilde boyutlandırıldı. Hazır G-code dosyası Ender 3 S1 ve PLA için hazırlanmıştır; farklı bir yazıcıda STL dosyasını kendi dilimleyicinizde açın.</p>
-    <p>Az gören öğrenciler için iki renkli basabilirsiniz: dilimleyicide geometri setinde, daire çizim cetvelinde ve sayı doğrusunda 3,0 mm'de, kesir parçalarında 4,0 mm'de, koordinat tahtasında, yüzlük tabloda ve pim deneme parçasında 5,0 mm'de, tabakta 5,4 mm'de duraklatıp filament değiştirin. Böylece kabartmalar zemin renginden ayrılır. En iyi sonuç açık renk zemin (beyaz ya da sarı) ve koyu kabartmayla (siyah) alınır.</p>
+    <p>Az gören öğrenciler için iki renkli basabilirsiniz: dilimleyicide geometri setinde, daire çizim cetvelinde ve sayı doğrusunda 3,0 mm'de, kesir parçalarında 4,0 mm'de, koordinat tahtasında, yüzlük tabloda, sütun grafik tahtasında ve pim deneme parçasında 5,0 mm'de, tabakta 5,4 mm'de duraklatıp filament değiştirin. Böylece kabartmalar zemin renginden ayrılır. En iyi sonuç açık renk zemin (beyaz ya da sarı) ve koyu kabartmayla (siyah) alınır.</p>
     <p>Daire çizim cetvelinin delikleri 2,0 mm'dir; tükenmez kalemin ve açılmış kurşun kalemin ucu delikten kâğıda değer. Raptiye yoksa merkez deliğine dik tuttuğunuz bir kalemle merkezi bastırabilirsiniz. Öğrencinin kalemi rahat girmiyorsa önce delik deneme parçasını basın: 1,8, 2,0, 2,2 ve 2,4 mm'lik dört deliğin üstünde 1'den 4'e kadar nokta vardır. Uygun olan ölçüyü betikteki <code>HOLE_D</code> değerine yazıp cetveli yeniden üretin.</p>
-    <p>Koordinat tahtasının ve yüzlük tablonun delikleri 5,0 mm, pimlerin deliğe giren gövdesi 4,8 mm'dir. Pimin delikte ne kadar sıkı duracağı yazıcıya göre değişir; tahtayı basmadan önce pim deneme parçasını ve birkaç pimi basın. 4,8, 4,9, 5,0, 5,1 ve 5,2 mm'lik beş deliğin üstünde 1'den 5'e kadar nokta vardır. Pimin dik ve sıkı durup elle rahat çıktığı ölçüyü ortak <a href="ortak/pim.py" download>pim.py</a> dosyasındaki <code>HOLE_D</code> değerine yazıp tahtaları yeniden üretin; iki tahta aynı değeri kullanır.</p>
+    <p>Koordinat tahtasının, yüzlük tablonun ve sütun grafik tahtasının delikleri 5,0 mm, pimlerin deliğe giren gövdesi 4,8 mm'dir. Pimin delikte ne kadar sıkı duracağı yazıcıya göre değişir; tahtayı basmadan önce pim deneme parçasını ve birkaç pimi basın. 4,8, 4,9, 5,0, 5,1 ve 5,2 mm'lik beş deliğin üstünde 1'den 5'e kadar nokta vardır. Pimin dik ve sıkı durup elle rahat çıktığı ölçüyü ortak <a href="ortak/pim.py" download>pim.py</a> dosyasındaki <code>HOLE_D</code> değerine yazıp tahtaları yeniden üretin; üç tahta da aynı değeri kullanır.</p>
     <p>Kaydırıcıların rayda ne kadar sıkı oturacağı yazıcıya göre değişir. Önce deneme rayını ve kaydırıcıları basın. Kaydırıcı sıkıysa betikteki <code>CLEAR</code> değerini büyütün (0,35–0,4); tık zayıfsa <code>DETENT</code> değerini 0,5'e çıkarın, sertse 0,3'e indirin.</p>
-    <p>Modeller Blender ile parametrik olarak üretildi. Ölçüleri değiştirmek isterseniz <a href="geometri-seti/generate_set.py" download>generate_set.py</a>, <a href="kesir-seti/generate_kesir.py" download>generate_kesir.py</a> ve <a href="sayi-dogrusu/generate_sayi_dogrusu.py" download>generate_sayi_dogrusu.py</a>, <a href="daire-cetveli/generate_daire_cetveli.py" download>generate_daire_cetveli.py</a>, <a href="koordinat-tahtasi/generate_koordinat_tahtasi.py" download>generate_koordinat_tahtasi.py</a> ve <a href="yuzluk-tablo/generate_yuzluk_tablo.py" download>generate_yuzluk_tablo.py</a> betiklerini, ortak <a href="ortak/dokunsal.py" download>dokunsal.py</a> ve <a href="ortak/pim.py" download>pim.py</a> kütüphaneleriyle birlikte kullanabilirsiniz. Blender dosyaları: <a href="geometri-seti/geometri_seti.blend" download>geometri seti</a>, <a href="kesir-seti/kesir_seti.blend" download>kesir seti</a>, <a href="sayi-dogrusu/sayi_dogrusu.blend" download>sayı doğrusu</a>, <a href="daire-cetveli/daire_cetveli.blend" download>daire çizim cetveli</a>, <a href="koordinat-tahtasi/koordinat_tahtasi.blend" download>koordinat tahtası</a>, <a href="yuzluk-tablo/yuzluk_tablo.blend" download>yüzlük tablo</a>.</p>
+    <p>Modeller Blender ile parametrik olarak üretildi. Ölçüleri değiştirmek isterseniz <a href="geometri-seti/generate_set.py" download>generate_set.py</a>, <a href="kesir-seti/generate_kesir.py" download>generate_kesir.py</a> ve <a href="sayi-dogrusu/generate_sayi_dogrusu.py" download>generate_sayi_dogrusu.py</a>, <a href="daire-cetveli/generate_daire_cetveli.py" download>generate_daire_cetveli.py</a>, <a href="koordinat-tahtasi/generate_koordinat_tahtasi.py" download>generate_koordinat_tahtasi.py</a>, <a href="yuzluk-tablo/generate_yuzluk_tablo.py" download>generate_yuzluk_tablo.py</a> ve <a href="sutun-grafik/generate_sutun_grafik.py" download>generate_sutun_grafik.py</a> betiklerini, ortak <a href="ortak/dokunsal.py" download>dokunsal.py</a> ve <a href="ortak/pim.py" download>pim.py</a> kütüphaneleriyle birlikte kullanabilirsiniz. Blender dosyaları: <a href="geometri-seti/geometri_seti.blend" download>geometri seti</a>, <a href="kesir-seti/kesir_seti.blend" download>kesir seti</a>, <a href="sayi-dogrusu/sayi_dogrusu.blend" download>sayı doğrusu</a>, <a href="daire-cetveli/daire_cetveli.blend" download>daire çizim cetveli</a>, <a href="koordinat-tahtasi/koordinat_tahtasi.blend" download>koordinat tahtası</a>, <a href="yuzluk-tablo/yuzluk_tablo.blend" download>yüzlük tablo</a>, <a href="sutun-grafik/sutun_grafik.blend" download>sütun grafik tahtası</a>.</p>
 
     <h3 class="h5 mt-4" id="bambu-x2d">Bambu Lab X2D için hazır projeler</h3>
     <p>Bambu Lab X2D kullanıyorsanız aşağıdaki projeleri Bambu Studio'da açıp dilimleyerek doğrudan basabilirsiniz. Parçalar plakalara dizilmiş, renkler atanmıştır. Zemin ve kabartma aynı nesnenin iki ayrı parçası olduğu için duraklatmaya gerek yoktur; rengi yazıcı kendisi değiştirir.</p>
     <ul>
-      <li><strong>Filamentler:</strong> 1 beyaz (zemin), 2 siyah (kabartma). Sayı doğrusu, koordinat tahtası ve yüzlük tablo projelerinde 3 kırmızı ve 4 mavi kaydırıcılar ve pimler içindir. Renkleri Bambu Studio'da değiştirebilirsiniz.</li>
+      <li><strong>Filamentler:</strong> 1 beyaz (zemin), 2 siyah (kabartma). Sayı doğrusu, koordinat tahtası, yüzlük tablo ve sütun grafik tahtası projelerinde 3 kırmızı ve 4 mavi kaydırıcılar ve pimler içindir. Renkleri Bambu Studio'da değiştirebilirsiniz.</li>
       <li><strong>Ayarlar:</strong> Bambu Lab X2D 0,4 mm nozul, 0.20mm Standard, Bambu PLA Basic, Textured PEI tabla.</li>
       <li><strong>Sayı doğrusu:</strong> Önce 1. plakayı (deneme rayı ve kaydırıcılar) basıp kaydırıcıların rayda nasıl oturduğunu deneyin. Bu plaka nesne nesne basılır; renk her katmanda değil, bir nesne bitince bir kez değişir.</li>
       <li><strong>Koordinat tahtası:</strong> Önce 1. plakayı (pim deneme ve pimler) basıp pimin hangi deliğe oturduğunu deneyin. Projedeki tahta 5,0 mm delikle hazırlanmıştır; başka bir ölçü gerekirse <code>HOLE_D</code> değiştirilip tahta ve proje yeniden üretilmelidir.</li>
       <li><strong>Yüzlük tablo:</strong> 1. plakada pim deneme parçası ve 50 işaret pimi vardır. Pim deneme parçasını koordinat tahtası için bastıysanız bu plakadan silebilirsiniz.</li>
+      <li><strong>Sütun grafik tahtası:</strong> 1. plakada pim deneme parçası ve 40 yuvarlak, 2. plakada 40 kare işaret pimi vardır. İki renk ayrı plakalarda olduğu için pimler daha kısa sürede basılır. Yüzlük tablonun işaret pimlerini bastıysanız 1. plakayı atlayabilirsiniz.</li>
     </ul>
     <div class="table-responsive">
       <table class="table table-sm align-middle">
@@ -435,6 +497,13 @@
             <td>4 sa 22 dk</td>
             <td>148 g</td>
             <td><a class="btn btn-sm btn-outline-secondary" href="bambu-x2d/yuzluk_tablo_x2d.3mf" download aria-label="Yüzlük tablo Bambu Lab X2D projesini indir">3MF İndir</a></td>
+          </tr>
+          <tr>
+            <th scope="row">Sütun grafik tahtası</th>
+            <td>1. Pim deneme ve yuvarlak işaret pimleri<br>2. Kare işaret pimleri<br>3. Sütun grafik tahtası</td>
+            <td>4 sa 12 dk</td>
+            <td>120 g</td>
+            <td><a class="btn btn-sm btn-outline-secondary" href="bambu-x2d/sutun_grafik_x2d.3mf" download aria-label="Sütun grafik tahtası Bambu Lab X2D projesini indir">3MF İndir</a></td>
           </tr>
         </tbody>
       </table>
